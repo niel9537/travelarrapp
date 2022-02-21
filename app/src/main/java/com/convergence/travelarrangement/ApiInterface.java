@@ -3,6 +3,7 @@ package com.convergence.travelarrangement;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.LoginModel;
 import com.convergence.travelarrangement.model.ProfileModel;
+import com.convergence.travelarrangement.model.SetListFormsModel;
 import com.convergence.travelarrangement.model.SubmitFormModel;
 
 import retrofit2.Call;
@@ -42,4 +43,8 @@ public interface ApiInterface {
     Call<GetListFormsModel> getlistformdonekaryawan();
     @GET("travel/getlistformadmin")
     Call<GetListFormsModel> getlistformadmin();
+    @POST("travel/setFormAdmin")
+    @FormUrlEncoded
+    Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,
+                                         @Field("status") String status);
 }

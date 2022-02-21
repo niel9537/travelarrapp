@@ -11,10 +11,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.convergence.travelarrangement.mainfragment.AboutFragment;
 import com.convergence.travelarrangement.mainfragment.DoneFragment;
@@ -27,7 +31,15 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
     NavigationView navigationView;
-
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_TOKEN = "token";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_ROLE = "role";
+    private static final String KEY_DIVISION = "division";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_NIK = "nik";
+    String Nama = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.frame, new HomeFragment());
         tx.commit();
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        Nama = sharedPreferences.getString(KEY_NAME,null);
+        View headerView = navigationView.getHeaderView(0);
+        TextView txtNames = (TextView) headerView.findViewById(R.id.names);
+        txtNames.setText(Nama);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -70,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
                         toolbar.setTitle("Travel Arrangement App");
                         break;
                     case R.id.logout:
+                        SharedPreferences preferences =getSharedPreferences("mypref", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        Toast.makeText(getApplicationContext(),"Berhasil Log Out",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                         startActivity(intent);
                         break;
