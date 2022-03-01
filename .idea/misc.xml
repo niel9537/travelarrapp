@@ -12,11 +12,13 @@
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/ic_list.xml" value="0.15208333333333332" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.22552083333333334" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/ic_salaryman_background.xml" value="0.28055555555555556" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/ic_travel.xml" value="0.38333333333333336" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/iv_about us_background.xml" value="0.13564814814814816" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/menu_back.xml" value="0.15208333333333332" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/menu_back_padding.xml" value="0.15208333333333332" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/drawable/menu_back_state.xml" value="0.15208333333333332" />
-        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/activity_form.xml" value="0.16" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/activity_detailimage.xml" value="0.18790849673202614" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/activity_form.xml" value="0.33" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/activity_main.xml" value="0.16485507246376813" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/app_bar_main.xml" value="0.209375" />
@@ -26,8 +28,9 @@
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/fragment_home.xml" value="0.2625" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/item_listform.xml" value="0.371875" />
-        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/modal_detailform.xml" value="0.22" />
-        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/modal_detailformadmin.xml" value="0.18611111111111112" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/modal_detailform.xml" value="0.33" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/modal_detailformadmin.xml" value="0.22" />
+        <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/modal_detailimage.xml" value="0.3671875" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/layout/nav_header.xml" value="0.33" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2484375" />
         <entry key="..\:/Project/TravelArrangementApp/travelarrangementmobile/app/src/main/res/menu/menu.xml" value="0.25" />

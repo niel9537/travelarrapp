@@ -21,6 +21,8 @@ import com.convergence.travelarrangement.ApiInterface;
 import com.convergence.travelarrangement.FormActivity;
 import com.convergence.travelarrangement.ListFormAdapter;
 import com.convergence.travelarrangement.ListFormAdminAdapter;
+import com.convergence.travelarrangement.ListFormFinanceAdapter;
+import com.convergence.travelarrangement.ListFormManajerAdapter;
 import com.convergence.travelarrangement.MainActivity;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
@@ -78,14 +80,24 @@ public class HomeFragment extends Fragment {
         Role = sharedPreferences.getString(KEY_ROLE,null);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        btnTambah = view.findViewById(R.id.btnTambah);
         if(Role.equals("2")){
             showListFormAdmin();
+            btnTambah.setVisibility(view.GONE);
+        }else if(Role.equals("1")){
+            showListForm();
+        }else if(Role.equals("3")){
+            btnTambah.setVisibility(view.GONE);
+            showListFormManajer();
+        }else if(Role.equals("4")){
+            btnTambah.setVisibility(view.GONE);
+            showListFormFinance();
         }else{
+            //btnTambah.setVisibility(view.GONE);
             showListForm();
         }
 
-        btnTambah = view.findViewById(R.id.btnTambah);
+
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +137,49 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()){
                     List<ListForm> listForms = response.body().getListForms();
                     mAdapter = new ListFormAdminAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListFormManajer(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformmanajer();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormManajerAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void showListFormFinance(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformfinance();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormFinanceAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
                     Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();

@@ -242,12 +242,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
-                        android:layout_weight="4"
-                        android:padding="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_file"/>
+                        android:id="@+id/ivUploadtransport"
+                        android:layout_weight="6"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUploadTicket"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -258,17 +259,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
-                        android:layout_weight="4"
-                        android:padding="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/ic_file"/>
+                        android:id="@+id/ivUploadhotel"
+                        android:layout_weight="6"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUploadhotel"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="UPLOAD FILE HOTEL"/>
+                        android:text="UPLOAD FILE TICKET"/>
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"

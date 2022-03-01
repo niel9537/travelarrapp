@@ -2,18 +2,22 @@ package com.convergence.travelarrangement;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.convergence.travelarrangement.model.ListForm;
 
 import org.w3c.dom.Text;
@@ -106,13 +110,34 @@ public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyView
                     txtStatus.setText("Status : Tidak terdefinisikan");
                 }
 
+
                 builder.setView(view);
                 Button btnKembali = view.findViewById(R.id.btnKembali);
+                Button btnTransport = view.findViewById(R.id.btnTransport);
+                Button btnHotel = view.findViewById(R.id.btnHotel);
+
                 final AlertDialog alertDialog=builder.create();
+
                 btnKembali.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         alertDialog.dismiss();
+                    }
+                });
+                btnTransport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context,DetailImageActivity.class);
+                        intent.putExtra("path", listForm.get(position).getTransport().toString());
+                        context.startActivity(intent);
+                    }
+                });
+                btnHotel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context,DetailImageActivity.class);
+                        intent.putExtra("path", listForm.get(position).getHotel().toString());
+                        context.startActivity(intent);
                     }
                 });
                 alertDialog.show();

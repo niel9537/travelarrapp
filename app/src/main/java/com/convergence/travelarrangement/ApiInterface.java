@@ -6,12 +6,16 @@ import com.convergence.travelarrangement.model.ProfileModel;
 import com.convergence.travelarrangement.model.SetListFormsModel;
 import com.convergence.travelarrangement.model.SubmitFormModel;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiInterface {
 
@@ -22,19 +26,21 @@ public interface ApiInterface {
     @POST("main/getprofile")
     @FormUrlEncoded
     Call<ProfileModel> getProfile(@Field("username") String username);
+    @Multipart
     @POST("travel/submitform")
-    @FormUrlEncoded
-    Call<SubmitFormModel> submitform(@Field("name") String name,
-                                     @Field("nik") String nik,
-                                     @Field("division") String division,
-                                     @Field("phonenumber") String phonenumber,
-                                     @Field("email") String email,
-                                     @Field("travelreason") String travelreason,
-                                     @Field("fromcity") String fromcity,
-                                     @Field("tocity") String tocity,
-                                     @Field("dates") String dates,
-                                     @Field("duration") String duration,
-                                     @Field("urgent") String urgent);
+    Call<SubmitFormModel> submitform(@Part MultipartBody.Part transport,
+                                     @Part MultipartBody.Part hotel,
+                                     @Part("name") RequestBody name,
+                                     @Part("nik") RequestBody nik,
+                                     @Part("division") RequestBody division,
+                                     @Part("phonenumber") RequestBody phonenumber,
+                                     @Part("email") RequestBody email,
+                                     @Part("travelreason") RequestBody travelreason,
+                                     @Part("fromcity") RequestBody fromcity,
+                                     @Part("tocity") RequestBody tocity,
+                                     @Part("dates") RequestBody dates,
+                                     @Part("duration") RequestBody duration,
+                                     @Part("urgent") RequestBody urgent);
     @GET("travel/getlistform")
     Call<GetListFormsModel> getlistform();
     @GET("travel/getlistformpendingkaryawan")
@@ -43,8 +49,19 @@ public interface ApiInterface {
     Call<GetListFormsModel> getlistformdonekaryawan();
     @GET("travel/getlistformadmin")
     Call<GetListFormsModel> getlistformadmin();
+    @GET("travel/getlistformpendingadmin")
+    Call<GetListFormsModel> getlistformpendingadmin();
+    @GET("travel/getlistformmanajer")
+    Call<GetListFormsModel> getlistformmanajer();
+    @GET("travel/getlistformfinance")
+    Call<GetListFormsModel> getlistformfinance();
     @POST("travel/setFormAdmin")
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,
                                          @Field("status") String status);
+    @Multipart
+    @POST("travel/upload")
+    Call<String> uploadImage(
+            @Part MultipartBody.Part file, @Part("transport") RequestBody name);
+
 }

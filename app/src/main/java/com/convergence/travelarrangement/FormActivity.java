@@ -1,20 +1,30 @@
 package com.convergence.travelarrangement;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,19 +34,31 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.convergence.travelarrangement.model.ProfileModel;
 import com.convergence.travelarrangement.model.SubmitFormModel;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormActivity extends AppCompatActivity {
+    private static final String RESULT_FILE_PATH = "4";
     RadioGroup radioGroup;
     RadioButton radioButton;
+    TextView txtSelectticket;
     EditText edtName, edtNik, edtDivision, edtPhonenumber, edtEmail, edtTravelreason, edtFrom, edtTo, edtDate, edtDuration;
-    Button btnSubmit;
+    ImageView ivUploadtransport, ivUploadhotel;
+    Button btnSubmit,btnUploadTicket,btnUploadHotel;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_TOKEN = "token";
@@ -45,10 +67,28 @@ public class FormActivity extends AppCompatActivity {
     private static final String KEY_DIVISION = "division";
     private static final String KEY_NAME = "name";
     private static final String KEY_NIK = "nik";
+
+    int files;
+    private String mediaPath1;
+    private String mediaPath2;
+    private String postPath1;
+    private String postPath2;
+    private static final int REQUEST_PICK_PHOTO = Config.REQUEST_PICK_PHOTO;
+    private static final int REQUEST_WRITE_PERMISSION = Config.REQUEST_WRITE_PERMISSION;
+
+
     String Token = "";
     String Urgent = "";
     DatePickerDialog.OnDateSetListener onDateSetListener;
 
+
+    // Akses Izin Ambil Gambar dari Storage
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            submitForm();
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +99,9 @@ public class FormActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarform);
+        ivUploadtransport = findViewById(R.id.ivUploadtransport);
+        ivUploadhotel = findViewById(R.id.ivUploadhotel);
+
         edtName = findViewById(R.id.edtName);
         edtNik = findViewById(R.id.edtNik);
         edtDivision = findViewById(R.id.edtDivision);
@@ -78,7 +121,8 @@ public class FormActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
         toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         radioGroup = findViewById(R.id.rdoGroup);
-
+        btnUploadTicket = findViewById(R.id.btnUploadTicket);
+        btnUploadHotel = findViewById(R.id.btnUploadhotel);
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +146,71 @@ public class FormActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitForm();
+                requestPermission();
             }
         });
+        btnUploadTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent albumIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                files=1;
+                startActivityForResult(albumIntent, REQUEST_PICK_PHOTO);
+
+            }
+        });
+        btnUploadHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent albumIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                files=2;
+                startActivityForResult(albumIntent, REQUEST_PICK_PHOTO);
+            }
+        });
+    }
+
+    //Akses izin ambil gambar dari penyimpanan
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_PICK_PHOTO){
+                if(data!=null){
+                    if(files == 1){
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                        assert cursor != null;
+                        cursor.moveToFirst();
+
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        mediaPath1 = cursor.getString(columnIndex);
+                        ivUploadtransport.setImageURI(data.getData());
+                        cursor.close();
+
+                        postPath1 = mediaPath2;
+                    }else{
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                        assert cursor != null;
+                        cursor.moveToFirst();
+
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        mediaPath2 = cursor.getString(columnIndex);
+                        ivUploadhotel.setImageURI(data.getData());
+                        cursor.close();
+
+                        postPath2 = mediaPath2;
+                    }
+
+                }
+            }
+        }
     }
 
     public void checkButton(View v){
@@ -117,37 +223,51 @@ public class FormActivity extends AppCompatActivity {
     }
 
     private void submitForm(){
-        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<SubmitFormModel> call = apiInterface.submitform(
-                edtName.getText().toString(),
-                edtNik.getText().toString(),
-                edtDivision.getText().toString(),
-                edtPhonenumber.getText().toString(),
-                edtEmail.getText().toString(),
-                edtTravelreason.getText().toString(),
-                edtFrom.getText().toString(),
-                edtTo.getText().toString(),
-                edtDate.getText().toString(),
-                edtDuration.getText().toString(),
-                Urgent
-        );
-        call.enqueue(new Callback<SubmitFormModel>() {
-            @Override
-            public void onResponse(Call<SubmitFormModel> call, Response<SubmitFormModel> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(FormActivity.this,"Sukses Submit",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(FormActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(FormActivity.this,"Gagal Submit, "+response.message(),Toast.LENGTH_SHORT).show();
+        if (mediaPath1== null && mediaPath2== null)
+        {
+            Toast.makeText(getApplicationContext(), "Upload file ticket dan hotel terlebih  dahulu", Toast.LENGTH_LONG).show();
+        }
+        else {
+            File imagefile = new File(mediaPath1);
+            RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
+            MultipartBody.Part partImage = MultipartBody.Part.createFormData("transport", imagefile.getName(), reqBody);
+            File imagefile2 = new File(mediaPath2);
+            RequestBody reqBody2 = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile2);
+            MultipartBody.Part partImage2 = MultipartBody.Part.createFormData("hotel", imagefile.getName(), reqBody2);
+            ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
+            Call<SubmitFormModel> call = apiInterface.submitform(
+                    partImage,
+                    partImage2,
+                    RequestBody.create(MediaType.parse("text/plain"),edtName.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtNik.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtDivision.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtPhonenumber.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtEmail.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtTravelreason.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtFrom.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtTo.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtDate.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),edtDuration.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"),Urgent)
+            );
+            call.enqueue(new Callback<SubmitFormModel>() {
+                @Override
+                public void onResponse(Call<SubmitFormModel> call, Response<SubmitFormModel> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(FormActivity.this, "Sukses Submit", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(FormActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(FormActivity.this, "Gagal Submit, " + response.message(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<SubmitFormModel> call, Throwable t) {
-                Toast.makeText(FormActivity.this,"Gagal Submit, "+t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<SubmitFormModel> call, Throwable t) {
+                    Toast.makeText(FormActivity.this, "Gagal Submit, " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 
@@ -155,5 +275,14 @@ public class FormActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    // Cek Versi Android Tuk Minta Izin
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+        } else {
+            submitForm();
+        }
     }
 }

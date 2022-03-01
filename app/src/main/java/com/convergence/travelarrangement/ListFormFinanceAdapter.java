@@ -14,11 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.convergence.travelarrangement.mainfragment.HomeFragment;
 import com.convergence.travelarrangement.model.ListForm;
-import com.convergence.travelarrangement.model.ProfileModel;
 import com.convergence.travelarrangement.model.SetListFormsModel;
-import com.convergence.travelarrangement.model.User;
 
 import java.util.List;
 
@@ -26,24 +23,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdapter.MyViewHolder> {
+public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinanceAdapter.MyViewHolder> {
     List<ListForm> listForm;
     Context context;
 
-    public ListFormAdminAdapter(List<ListForm> listForm, Context context) {
+    public ListFormFinanceAdapter(List<ListForm> listForm, Context context) {
         this.listForm = listForm;
         this.context = context;
     }
 
     @Override
-    public ListFormAdminAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListFormFinanceAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listform, parent, false);
-        ListFormAdminAdapter.MyViewHolder mViewHolder = new ListFormAdminAdapter.MyViewHolder(mView);
+        ListFormFinanceAdapter.MyViewHolder mViewHolder = new ListFormFinanceAdapter.MyViewHolder(mView);
         return mViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ListFormAdminAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(ListFormFinanceAdapter.MyViewHolder holder, final int position) {
         String SHARED_PREF_NAME = "mypref";
         String KEY_ROLE = "role";
         String KEY_TOKEN = "token";
@@ -74,162 +71,8 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
             holder.txtStatus.setText("Status : Tidak terdefinisikan");
         }
 
-        if(listForm.get(position).getStatus().equals("2")){
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
-                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
-                    TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
-                    txtFrom.setText(listForm.get(position).getFromcity());
-                    TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
-                    txtTo.setText(listForm.get(position).getTocity());
-                    TextView txtName = (TextView) view.findViewById(R.id.txtName);
-                    txtName.setText(listForm.get(position).getName());
-                    TextView txtNik = (TextView) view.findViewById(R.id.txtNik);
-                    txtNik.setText(listForm.get(position).getNik());
-                    TextView txtPhonenumber = (TextView) view.findViewById(R.id.txtPhonenumber);
-                    txtPhonenumber.setText(listForm.get(position).getPhonenumber());
-                    TextView txtEmail = (TextView) view.findViewById(R.id.txtEmail);
-                    txtEmail.setText(listForm.get(position).getEmail());
-                    TextView txtDates = (TextView) view.findViewById(R.id.txtDates);
-                    txtDates.setText(listForm.get(position).getDates());
-                    TextView txtDuration = (TextView) view.findViewById(R.id.txtDuration);
-                    txtDuration.setText(listForm.get(position).getDuration());
-                    TextView txtTravelreason = (TextView) view.findViewById(R.id.txtTravelreason);
-                    txtTravelreason.setText(listForm.get(position).getTravelreason());
-                    TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
-                    txtUrgent.setText(listForm.get(position).getUrgent());
-                    TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
-                    if(listForm.get(position).getStatus().equals("1")){
-                        txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
-                    }else if(listForm.get(position).getStatus().equals("2")){
-                        txtStatus.setText("Status : Admin telah konfirmasi, menunggu konfirmasi dari Manajer");
-                    }else if(listForm.get(position).getStatus().equals("3")){
-                        txtStatus.setText("Status : Permintaan ditolak oleh Admin, silahkan melakukan revisi");
-                    }else if(listForm.get(position).getStatus().equals("4")){
-                        txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
-                    }else if(listForm.get(position).getStatus().equals("5")){
-                        txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
-                    }else if(listForm.get(position).getStatus().equals("6")){
-                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
-                    }else{
-                        txtStatus.setText("Status : Tidak terdefinisikan");
-                    }
-
-                    builder.setView(view);
-                    Button btnKembali = view.findViewById(R.id.btnKembali);
-                    Button btnTransport = view.findViewById(R.id.btnTransport);
-                    Button btnHotel = view.findViewById(R.id.btnHotel);
-
-                    final AlertDialog alertDialog=builder.create();
-
-                    btnKembali.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                        }
-                    });
-                    btnTransport.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(context,DetailImageActivity.class);
-                            intent.putExtra("path", listForm.get(position).getTransport().toString());
-                            context.startActivity(intent);
-                        }
-                    });
-                    btnHotel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(context,DetailImageActivity.class);
-                            intent.putExtra("path", listForm.get(position).getHotel().toString());
-                            context.startActivity(intent);
-                        }
-                    });
-                    alertDialog.show();
-                }
-
-            });
-        }else if(listForm.get(position).getStatus().equals("3")){
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
-                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
-                    TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
-                    txtFrom.setText(listForm.get(position).getFromcity());
-                    TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
-                    txtTo.setText(listForm.get(position).getTocity());
-                    TextView txtName = (TextView) view.findViewById(R.id.txtName);
-                    txtName.setText(listForm.get(position).getName());
-                    TextView txtNik = (TextView) view.findViewById(R.id.txtNik);
-                    txtNik.setText(listForm.get(position).getNik());
-                    TextView txtPhonenumber = (TextView) view.findViewById(R.id.txtPhonenumber);
-                    txtPhonenumber.setText(listForm.get(position).getPhonenumber());
-                    TextView txtEmail = (TextView) view.findViewById(R.id.txtEmail);
-                    txtEmail.setText(listForm.get(position).getEmail());
-                    TextView txtDates = (TextView) view.findViewById(R.id.txtDates);
-                    txtDates.setText(listForm.get(position).getDates());
-                    TextView txtDuration = (TextView) view.findViewById(R.id.txtDuration);
-                    txtDuration.setText(listForm.get(position).getDuration());
-                    TextView txtTravelreason = (TextView) view.findViewById(R.id.txtTravelreason);
-                    txtTravelreason.setText(listForm.get(position).getTravelreason());
-                    TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
-                    txtUrgent.setText(listForm.get(position).getUrgent());
-                    TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
-                    if(listForm.get(position).getStatus().equals("1")){
-                        txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
-                    }else if(listForm.get(position).getStatus().equals("2")){
-                        txtStatus.setText("Status : Admin telah konfirmasi, menunggu konfirmasi dari Manajer");
-                    }else if(listForm.get(position).getStatus().equals("3")){
-                        txtStatus.setText("Status : Permintaan ditolak oleh Admin, silahkan melakukan revisi");
-                    }else if(listForm.get(position).getStatus().equals("4")){
-                        txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
-                    }else if(listForm.get(position).getStatus().equals("5")){
-                        txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
-                    }else if(listForm.get(position).getStatus().equals("6")){
-                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
-                    }else{
-                        txtStatus.setText("Status : Tidak terdefinisikan");
-                    }
-
-                    builder.setView(view);
-                    Button btnKembali = view.findViewById(R.id.btnKembali);
-                    Button btnTransport = view.findViewById(R.id.btnTransport);
-                    Button btnHotel = view.findViewById(R.id.btnHotel);
-
-                    final AlertDialog alertDialog=builder.create();
-
-                    btnKembali.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                        }
-                    });
-                    btnTransport.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(context,DetailImageActivity.class);
-                            intent.putExtra("path", listForm.get(position).getTransport().toString());
-                            context.startActivity(intent);
-                        }
-                    });
-                    btnHotel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(context,DetailImageActivity.class);
-                            intent.putExtra("path", listForm.get(position).getHotel().toString());
-                            context.startActivity(intent);
-                        }
-                    });
-                    alertDialog.show();
-                }
-
-            });
-        }
-        else{
+        if(listForm.get(position).getStatus().equals("4"))
+        {
             String finalTokens = tokens;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -282,6 +125,13 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     Button btnHotel = view.findViewById(R.id.btnHotel);
 
                     final AlertDialog alertDialog=builder.create();
+
+                    btnKembali.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
                     btnTransport.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -298,24 +148,175 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                             context.startActivity(intent);
                         }
                     });
+                    btnTerima.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "6");
+                            alertDialog.dismiss();
+                        }
+                    });
+                    btnTolak.setVisibility(view.GONE);
+//                    btnTolak.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "5");
+//                            alertDialog.dismiss();
+//                        }
+//
+//
+//                    });
+                    alertDialog.show();
+                }
+
+            });
+        }else if(listForm.get(position).getStatus().equals("6")){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
+                    TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
+                    txtFrom.setText(listForm.get(position).getFromcity());
+                    TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
+                    txtTo.setText(listForm.get(position).getTocity());
+                    TextView txtName = (TextView) view.findViewById(R.id.txtName);
+                    txtName.setText(listForm.get(position).getName());
+                    TextView txtNik = (TextView) view.findViewById(R.id.txtNik);
+                    txtNik.setText(listForm.get(position).getNik());
+                    TextView txtPhonenumber = (TextView) view.findViewById(R.id.txtPhonenumber);
+                    txtPhonenumber.setText(listForm.get(position).getPhonenumber());
+                    TextView txtEmail = (TextView) view.findViewById(R.id.txtEmail);
+                    txtEmail.setText(listForm.get(position).getEmail());
+                    TextView txtDates = (TextView) view.findViewById(R.id.txtDates);
+                    txtDates.setText(listForm.get(position).getDates());
+                    TextView txtDuration = (TextView) view.findViewById(R.id.txtDuration);
+                    txtDuration.setText(listForm.get(position).getDuration());
+                    TextView txtTravelreason = (TextView) view.findViewById(R.id.txtTravelreason);
+                    txtTravelreason.setText(listForm.get(position).getTravelreason());
+                    TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
+                    txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
+                    if(listForm.get(position).getStatus().equals("1")){
+                        txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
+                    }else if(listForm.get(position).getStatus().equals("2")){
+                        txtStatus.setText("Status : Admin telah konfirmasi, menunggu konfirmasi dari Manajer");
+                    }else if(listForm.get(position).getStatus().equals("3")){
+                        txtStatus.setText("Status : Permintaan ditolak oleh Admin, silahkan melakukan revisi");
+                    }else if(listForm.get(position).getStatus().equals("4")){
+                        txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
+                    }else if(listForm.get(position).getStatus().equals("5")){
+                        txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+                    }else if(listForm.get(position).getStatus().equals("6")){
+                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                    }else{
+                        txtStatus.setText("Status : Tidak terdefinisikan");
+                    }
+
+                    builder.setView(view);
+                    Button btnKembali = view.findViewById(R.id.btnKembali);
+                    Button btnTransport = view.findViewById(R.id.btnTransport);
+                    Button btnHotel = view.findViewById(R.id.btnHotel);
+
+                    final AlertDialog alertDialog=builder.create();
+
                     btnKembali.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
                         }
                     });
-                    btnTerima.setOnClickListener(new View.OnClickListener() {
+                    btnTransport.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "2");
+                            Intent intent = new Intent(context,DetailImageActivity.class);
+                            intent.putExtra("path", listForm.get(position).getTransport().toString());
+                            context.startActivity(intent);
+                        }
+                    });
+                    btnHotel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context,DetailImageActivity.class);
+                            intent.putExtra("path", listForm.get(position).getHotel().toString());
+                            context.startActivity(intent);
+                        }
+                    });
+                    alertDialog.show();
+                }
+
+            });
+        }else{
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
+                    TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
+                    txtFrom.setText(listForm.get(position).getFromcity());
+                    TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
+                    txtTo.setText(listForm.get(position).getTocity());
+                    TextView txtName = (TextView) view.findViewById(R.id.txtName);
+                    txtName.setText(listForm.get(position).getName());
+                    TextView txtNik = (TextView) view.findViewById(R.id.txtNik);
+                    txtNik.setText(listForm.get(position).getNik());
+                    TextView txtPhonenumber = (TextView) view.findViewById(R.id.txtPhonenumber);
+                    txtPhonenumber.setText(listForm.get(position).getPhonenumber());
+                    TextView txtEmail = (TextView) view.findViewById(R.id.txtEmail);
+                    txtEmail.setText(listForm.get(position).getEmail());
+                    TextView txtDates = (TextView) view.findViewById(R.id.txtDates);
+                    txtDates.setText(listForm.get(position).getDates());
+                    TextView txtDuration = (TextView) view.findViewById(R.id.txtDuration);
+                    txtDuration.setText(listForm.get(position).getDuration());
+                    TextView txtTravelreason = (TextView) view.findViewById(R.id.txtTravelreason);
+                    txtTravelreason.setText(listForm.get(position).getTravelreason());
+                    TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
+                    txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
+                    if(listForm.get(position).getStatus().equals("1")){
+                        txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
+                    }else if(listForm.get(position).getStatus().equals("2")){
+                        txtStatus.setText("Status : Admin telah konfirmasi, menunggu konfirmasi dari Manajer");
+                    }else if(listForm.get(position).getStatus().equals("3")){
+                        txtStatus.setText("Status : Permintaan ditolak oleh Admin, silahkan melakukan revisi");
+                    }else if(listForm.get(position).getStatus().equals("4")){
+                        txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
+                    }else if(listForm.get(position).getStatus().equals("5")){
+                        txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+                    }else if(listForm.get(position).getStatus().equals("6")){
+                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                    }else{
+                        txtStatus.setText("Status : Tidak terdefinisikan");
+                    }
+
+                    builder.setView(view);
+                    Button btnKembali = view.findViewById(R.id.btnKembali);
+                    Button btnTransport = view.findViewById(R.id.btnTransport);
+                    Button btnHotel = view.findViewById(R.id.btnHotel);
+
+                    final AlertDialog alertDialog=builder.create();
+
+                    btnKembali.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                             alertDialog.dismiss();
                         }
                     });
-                    btnTolak.setOnClickListener(new View.OnClickListener() {
+                    btnTransport.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "3");
-                            alertDialog.dismiss();
+                            Intent intent = new Intent(context,DetailImageActivity.class);
+                            intent.putExtra("path", listForm.get(position).getTransport().toString());
+                            context.startActivity(intent);
+                        }
+                    });
+                    btnHotel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context,DetailImageActivity.class);
+                            intent.putExtra("path", listForm.get(position).getHotel().toString());
+                            context.startActivity(intent);
                         }
                     });
                     alertDialog.show();

@@ -299,6 +299,29 @@
                 </LinearLayout>
 
             </ScrollView>
+            <ImageView
+                android:id="@+id/ivPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"/>
+            <Button
+                android:textColor="@color/blueanedot"
+                android:backgroundTint="@color/white"
+                android:id="@+id/btnTransport"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LIHAT DETAIL TRANSPORTASI"
+                android:textSize="15sp"/>
+            <Button
+                android:textColor="@color/blueanedot"
+                android:backgroundTint="@color/white"
+                android:id="@+id/btnHotel"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LIHAT DETAIL HOTEL"
+                android:textSize="15sp"/>
             <LinearLayout
 
                 android:layout_marginTop="10dp"
