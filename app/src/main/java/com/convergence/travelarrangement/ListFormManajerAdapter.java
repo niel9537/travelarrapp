@@ -100,6 +100,8 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -193,6 +195,8 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -270,6 +274,8 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");

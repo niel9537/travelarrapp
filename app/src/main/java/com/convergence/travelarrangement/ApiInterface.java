@@ -59,6 +59,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,
                                          @Field("status") String status);
+    @POST("travel/setFormAdminBudget")
+    @FormUrlEncoded
+    Call<SetListFormsModel> setFormAdminBudget(@Field("id_ticketarr") String id_ticketarr,
+                                               @Field("status") String status,
+                                               @Field("budget") String budget);
     @Multipart
     @POST("travel/upload")
     Call<String> uploadImage(

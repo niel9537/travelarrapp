@@ -46,11 +46,14 @@ public class ListForm {
     @SerializedName("hotel")
     @Expose
     private String hotel;
+    @SerializedName("budget")
+    @Expose
+    private String budget;
     @SerializedName("status")
     @Expose
     private String status;
 
-    public ListForm(String idTicketarr, String name, String nik, String division, String phonenumber, String email, String travelreason, String fromcity, String tocity, String dates, String duration, String urgent, String transport, String hotel, String status) {
+    public ListForm(String idTicketarr, String name, String nik, String division, String phonenumber, String email, String travelreason, String fromcity, String tocity, String dates, String duration, String urgent, String transport, String hotel, String budget, String status) {
         this.idTicketarr = idTicketarr;
         this.name = name;
         this.nik = nik;
@@ -65,6 +68,7 @@ public class ListForm {
         this.urgent = urgent;
         this.transport = transport;
         this.hotel = hotel;
+        this.budget = budget;
         this.status = status;
     }
 
@@ -178,6 +182,14 @@ public class ListForm {
 
     public void setHotel(String hotel) {
         this.hotel = hotel;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
     }
 
     public String getStatus() {

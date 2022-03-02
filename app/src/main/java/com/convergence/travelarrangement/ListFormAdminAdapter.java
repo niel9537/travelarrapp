@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,8 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -178,6 +181,8 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -257,6 +262,9 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     txtTravelreason.setText(listForm.get(position).getTravelreason());
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
+                    TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
+                    txtBudget.setText(listForm.get(position).getBudget());
+                    EditText edtBudget = (EditText) view.findViewById(R.id.edtBudget);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -307,7 +315,7 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     btnTerima.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "2");
+                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "2",edtBudget.getText().toString());
                             alertDialog.dismiss();
                         }
                     });
@@ -325,11 +333,12 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
         }
     }
 
-    void terimaAdmin(View view,String id,String Token, String status) {
+    void terimaAdmin(View view,String id,String Token, String status, String budget) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
-        Call<SetListFormsModel> call = apiInterface.setFormAdmin(
+        Call<SetListFormsModel> call = apiInterface.setFormAdminBudget(
                 id,
-                status
+                status,
+                budget
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override

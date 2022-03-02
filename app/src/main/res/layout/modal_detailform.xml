@@ -4,6 +4,9 @@
     android:layout_height="wrap_content"
     android:background="@color/lightgreyanedot"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -272,6 +275,31 @@
                         android:gravity="left"/>
                 </LinearLayout>
                 <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textSize="12sp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:layout_marginVertical="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueanedot"
+                            android:text="Budget"
+                            android:gravity="left"/>
+                        <TextView
+                            android:id="@+id/txtBudget"
+                            android:textSize="12sp"
+                            android:layout_weight="1"
+                            android:layout_marginVertical="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/blueanedot"
+                            android:text=": Belum Ditentukan"
+                            android:gravity="left"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -331,5 +359,5 @@
                 android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>
