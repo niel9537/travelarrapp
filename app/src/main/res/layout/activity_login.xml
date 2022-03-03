@@ -48,10 +48,18 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignin"
             android:backgroundTint="@color/blueanedot"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="10dp"
             app:cornerRadius="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in"/>
+            android:text="M A S U K"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/btnSignup"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/blueanedot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="R E G I S T R A S I"/>
     </LinearLayout>
 </RelativeLayout>

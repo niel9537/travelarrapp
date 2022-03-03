@@ -3,6 +3,7 @@ package com.convergence.travelarrangement;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.LoginModel;
 import com.convergence.travelarrangement.model.ProfileModel;
+import com.convergence.travelarrangement.model.RegisterModel;
 import com.convergence.travelarrangement.model.SetListFormsModel;
 import com.convergence.travelarrangement.model.SubmitFormModel;
 
@@ -23,6 +24,15 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<LoginModel> login(@Field("username") String username,
                            @Field("password") String password);
+    @POST("user/registrasi")
+    @FormUrlEncoded
+    Call<RegisterModel> registrasi(@Field("nik") String nik,
+                                   @Field("name") String name,
+                                   @Field("email") String email,
+                                   @Field("username") String username,
+                                   @Field("password") String password,
+                                   @Field("division") String division,
+                                   @Field("role") String role);
     @POST("main/getprofile")
     @FormUrlEncoded
     Call<ProfileModel> getProfile(@Field("username") String username);
@@ -53,8 +63,12 @@ public interface ApiInterface {
     Call<GetListFormsModel> getlistformpendingadmin();
     @GET("travel/getlistformmanajer")
     Call<GetListFormsModel> getlistformmanajer();
+    @GET("travel/getlistformpendingmanajer")
+    Call<GetListFormsModel> getlistformpendingmanajer();
     @GET("travel/getlistformfinance")
     Call<GetListFormsModel> getlistformfinance();
+    @GET("travel/getlistformpendingfinance")
+    Call<GetListFormsModel> getlistformpendingfinance();
     @POST("travel/setFormAdmin")
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,

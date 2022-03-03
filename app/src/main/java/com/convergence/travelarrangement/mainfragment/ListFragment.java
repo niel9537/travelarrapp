@@ -104,12 +104,61 @@ public class ListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         if(Role.equals("1")){
             showListFormPendingKaryawan();
-        }else if(Role.equals("2")){
+        }else if(Role.equals("2")) {
             showListFormPendingAdmin();
+        }else if(Role.equals("3")) {
+            showListFormPendingManajer();
+        }else if(Role.equals("4")){
+            showListFormPendingFinance();
         }
 
         return view;
     }
+
+    void showListFormPendingManajer() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajer();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormAdminAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void showListFormPendingFinance() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingfinance();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormAdminAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     void showListFormPendingKaryawan(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
         Call<GetListFormsModel> call = apiInterface.getlistformpendingkaryawan();
@@ -131,6 +180,7 @@ public class ListFragment extends Fragment {
             }
         });
     }
+
     void showListFormPendingAdmin(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
         Call<GetListFormsModel> call = apiInterface.getlistformpendingadmin();

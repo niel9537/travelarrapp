@@ -192,4 +192,25 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    void showListFormPendingManajer(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajer();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormFinanceAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

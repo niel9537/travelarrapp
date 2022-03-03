@@ -15,6 +15,7 @@
         android:roundIcon="@drawable/ic_travel"
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelArrangement" >
+        <activity android:name=".RegisterActivity"/>
         <activity android:name=".DetailImageActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".FormActivity"/>
