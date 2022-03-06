@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.convergence.travelarrangement.ApiHelper;
@@ -42,6 +43,7 @@ import retrofit2.Response;
  */
 public class HomeFragment extends Fragment {
     Button btnTambah;
+    TextView txtNama, txtKata;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -55,6 +57,7 @@ public class HomeFragment extends Fragment {
     private static final String KEY_NIK = "nik";
     String Token = "";
     String Role = "";
+    String NamaUser = "";
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -74,24 +77,33 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        txtNama = view.findViewById(R.id.txtNama);
+        txtKata = view.findViewById(R.id.txtKata);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_listForm);
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         Token = sharedPreferences.getString(KEY_TOKEN,null);
         Role = sharedPreferences.getString(KEY_ROLE,null);
+        NamaUser = sharedPreferences.getString(KEY_NAME,null);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         btnTambah = view.findViewById(R.id.btnTambah);
         if(Role.equals("2")){
             showListFormAdmin();
             btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+NamaUser);
+            txtKata.setVisibility(view.GONE);
         }else if(Role.equals("1")){
             showListForm();
         }else if(Role.equals("3")){
-            btnTambah.setVisibility(view.GONE);
             showListFormManajer();
-        }else if(Role.equals("4")){
             btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+NamaUser);
+            txtKata.setVisibility(view.GONE);
+        }else if(Role.equals("4")){
             showListFormFinance();
+            btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+NamaUser);
+            txtKata.setVisibility(view.GONE);
         }else{
             //btnTambah.setVisibility(view.GONE);
             showListForm();

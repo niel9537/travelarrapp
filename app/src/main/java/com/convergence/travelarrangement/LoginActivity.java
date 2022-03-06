@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity{
     private static final String KEY_DIVISION = "division";
     private static final String KEY_NAME = "name";
     private static final String KEY_NIK = "nik";
+    private static final String KEY_EMAIL = "email";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity{
                     editor.putString(KEY_DIVISION,userList.get(0).getDivision());
                     editor.putString(KEY_NAME,userList.get(0).getName());
                     editor.putString(KEY_NIK,userList.get(0).getNik());
+                    editor.putString(KEY_EMAIL,userList.get(0).getEmail());
                     editor.apply();
                     Log.d("TOKEN : ","Username "+userList.get(0).getUsername());
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);

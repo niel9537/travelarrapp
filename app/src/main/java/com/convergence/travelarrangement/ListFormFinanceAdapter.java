@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +45,14 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
         String SHARED_PREF_NAME = "mypref";
         String KEY_ROLE = "role";
         String KEY_TOKEN = "token";
+        String KEY_EMAIL = "email";
+        String email = "";
         String tokens = "";
         String role = "";
 
+
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        email = preferences.getString(KEY_EMAIL, null);
         role = preferences.getString(KEY_ROLE, null);
         tokens = preferences.getString(KEY_TOKEN, null);
         Log.d("Role", ""+role);
@@ -74,12 +79,14 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
         if(listForm.get(position).getStatus().equals("4"))
         {
             String finalTokens = tokens;
+            String finalEmail = email;
+            String finalRole = role;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
-                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailformadmin,null);
+                    View view=LayoutInflater.from(context).inflate(R.layout.modal_detailformfinance,null);
                     TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
                     txtFrom.setText(listForm.get(position).getFromcity());
                     TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
@@ -153,7 +160,7 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
                     btnTerima.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "6");
+                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "6",txtName.getText().toString(), finalEmail, finalRole);
                             alertDialog.dismiss();
                         }
                     });
@@ -332,11 +339,14 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
         }
     }
 
-    void terimaAdmin(View view,String id,String Token, String status) {
+    void terimaAdmin(View view,String id,String Token, String status, String name, String email, String role) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdmin(
                 id,
-                status
+                status,
+                name,
+                email,
+                role
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override
@@ -357,11 +367,14 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
             }
         });
     }
-    void tolakAdmin(View view,String id,String Token, String status) {
+    void tolakAdmin(View view,String id,String Token, String status,String name, String email, String role) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdmin(
                 id,
-                status
+                status,
+                name,
+                email,
+                role
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override

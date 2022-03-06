@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +45,14 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
         String SHARED_PREF_NAME = "mypref";
         String KEY_ROLE = "role";
         String KEY_TOKEN = "token";
+        String KEY_EMAIL = "email";
+        String email = "";
         String tokens = "";
         String role = "";
 
+
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        email = preferences.getString(KEY_EMAIL, null);
         role = preferences.getString(KEY_ROLE, null);
         tokens = preferences.getString(KEY_TOKEN, null);
         Log.d("Role", ""+role);
@@ -74,6 +79,8 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
         if(listForm.get(position).getStatus().equals("2"))
         {
             String finalTokens = tokens;
+            String finalEmail = email;
+            String finalRole = role;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -153,14 +160,14 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
                     btnTerima.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "4");
+                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "4", txtName.getText().toString(), finalEmail, finalRole);
                             alertDialog.dismiss();
                         }
                     });
                     btnTolak.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "5");
+                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "5", txtName.getText().toString(), txtEmail.getText().toString(), finalRole);
                             alertDialog.dismiss();
                         }
                     });
@@ -329,11 +336,14 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
         }
     }
 
-    void terimaAdmin(View view,String id,String Token, String status) {
+    void terimaAdmin(View view,String id,String Token, String status, String name, String email, String role) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdmin(
                 id,
-                status
+                status,
+                name,
+                email,
+                role
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override
@@ -354,11 +364,14 @@ public class ListFormManajerAdapter extends RecyclerView.Adapter<ListFormManajer
             }
         });
     }
-    void tolakAdmin(View view,String id,String Token, String status) {
+    void tolakAdmin(View view,String id,String Token, String status, String name, String email, String role) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdmin(
                 id,
-                status
+                status,
+                name,
+                email,
+                role
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override

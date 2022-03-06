@@ -48,10 +48,14 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
         String SHARED_PREF_NAME = "mypref";
         String KEY_ROLE = "role";
         String KEY_TOKEN = "token";
+        String KEY_EMAIL = "email";
+        String email = "";
         String tokens = "";
         String role = "";
 
+
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        email = preferences.getString(KEY_EMAIL, null);
         role = preferences.getString(KEY_ROLE, null);
         tokens = preferences.getString(KEY_TOKEN, null);
         Log.d("Role", ""+role);
@@ -236,6 +240,8 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
         }
         else{
             String finalTokens = tokens;
+            String finalEmail = email;
+            String finalRole = role;
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -315,14 +321,14 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     btnTerima.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "2",edtBudget.getText().toString());
+                            terimaAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "2",edtBudget.getText().toString(),txtName.getText().toString(), finalEmail, finalRole);
                             alertDialog.dismiss();
                         }
                     });
                     btnTolak.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "3");
+                            tolakAdmin(view,listForm.get(position).getIdTicketarr(), finalTokens, "3", txtName.getText().toString(), txtEmail.getText().toString(), finalRole);
                             alertDialog.dismiss();
                         }
                     });
@@ -333,12 +339,15 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
         }
     }
 
-    void terimaAdmin(View view,String id,String Token, String status, String budget) {
+    void terimaAdmin(View view,String id,String Token, String status, String budget,String name, String email, String role) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdminBudget(
                 id,
                 status,
-                budget
+                budget,
+                name,
+                email,
+                role
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override
@@ -359,17 +368,20 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
             }
         });
     }
-    void tolakAdmin(View view,String id,String Token, String status) {
+    void tolakAdmin(View view,String id,String Token, String status, String name, String emails, String roles) {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
         Call<SetListFormsModel> call = apiInterface.setFormAdmin(
                 id,
-                status
+                status,
+                name,
+                emails,
+                roles
         );
         call.enqueue(new Callback<SetListFormsModel>() {
             @Override
             public void onResponse(Call<SetListFormsModel> call, Response<SetListFormsModel> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(view.getContext(), "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, MainActivity.class));
                 } else {
                     Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
