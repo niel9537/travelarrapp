@@ -69,6 +69,19 @@ public interface ApiInterface {
     Call<GetListFormsModel> getlistformfinance();
     @GET("travel/getlistformpendingfinance")
     Call<GetListFormsModel> getlistformpendingfinance();
+    @POST("travel/setFormAdminManajerDiv")
+    @FormUrlEncoded
+    Call<SetListFormsModel> setFormAdminManajerDiv(@Field("id_ticketarr") String id_ticketarr,
+                                         @Field("status") String status,
+                                         @Field("name") String name,
+                                         @Field("email") String email,
+                                         @Field("role") String role);
+    @GET("travel/getlistformmanajerdiv")
+    Call<GetListFormsModel> getlistformmanajerdiv();
+    @GET("travel/getlistformpendingmanajerdiv")
+    Call<GetListFormsModel> getlistformpendingmanajerdiv();
+    @GET("travel/getlistformdonemanajerdiv")
+    Call<GetListFormsModel> getlistformdonemanajerdiv();
     @POST("travel/setFormAdmin")
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,

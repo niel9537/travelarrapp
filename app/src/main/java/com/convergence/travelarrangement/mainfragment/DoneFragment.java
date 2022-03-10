@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.convergence.travelarrangement.ApiHelper;
 import com.convergence.travelarrangement.ApiInterface;
 import com.convergence.travelarrangement.ListFormAdapter;
+import com.convergence.travelarrangement.ListFormManajerDivAdapter;
+import com.convergence.travelarrangement.ListFormTitleCAdapter;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.ListForm;
@@ -54,6 +56,7 @@ public class DoneFragment extends Fragment {
     private static final String KEY_NAME = "name";
     private static final String KEY_NIK = "nik";
     String Token = "";
+    String Role = "";
     public DoneFragment() {
         // Required empty public constructor
     }
@@ -93,9 +96,16 @@ public class DoneFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_listFormDoneKaryawan);
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         Token = sharedPreferences.getString(KEY_TOKEN,null);
+        Role = sharedPreferences.getString(KEY_ROLE,null);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        showListFormDoneKaryawan();
+        if(Role.equals("5")){
+            showListFormDoneManajerDiv();
+        }else if(Role.equals("6")){
+            showListFormDoneManajerDivTitleC();
+        }else{
+            showListFormDoneKaryawan();
+        }
         return view;
     }
     void showListFormDoneKaryawan(){
@@ -107,6 +117,49 @@ public class DoneFragment extends Fragment {
                 if (response.isSuccessful()){
                     List<ListForm> listForms = response.body().getListForms();
                     mAdapter = new ListFormAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void showListFormDoneManajerDivTitleC(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormTitleCAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListFormDoneManajerDiv(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormManajerDivAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
                     Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();

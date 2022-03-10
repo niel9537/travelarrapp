@@ -63,6 +63,12 @@ public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyView
             holder.txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
         }else if(listForm.get(position).getStatus().equals("6")){
             holder.txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+        }else if(listForm.get(position).getStatus().equals("7")){
+            holder.txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
+        }else if(listForm.get(position).getStatus().equals("8")){
+            holder.txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+        }else if(listForm.get(position).getStatus().equals("9")){
+            holder.txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
         }else{
             holder.txtStatus.setText("Status : Tidak terdefinisikan");
         }
@@ -108,6 +114,12 @@ public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyView
                     txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
                 }else if(listForm.get(position).getStatus().equals("6")){
                     txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                }else if(listForm.get(position).getStatus().equals("7")){
+                    txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
+                }else if(listForm.get(position).getStatus().equals("8")){
+                    txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+                }else if(listForm.get(position).getStatus().equals("9")){
+                    txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
                 }else{
                     txtStatus.setText("Status : Tidak terdefinisikan");
                 }

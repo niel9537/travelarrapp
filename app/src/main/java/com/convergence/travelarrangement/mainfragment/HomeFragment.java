@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.convergence.travelarrangement.ListFormAdapter;
 import com.convergence.travelarrangement.ListFormAdminAdapter;
 import com.convergence.travelarrangement.ListFormFinanceAdapter;
 import com.convergence.travelarrangement.ListFormManajerAdapter;
+import com.convergence.travelarrangement.ListFormManajerDivAdapter;
+import com.convergence.travelarrangement.ListFormTitleCAdapter;
 import com.convergence.travelarrangement.MainActivity;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
@@ -87,6 +90,7 @@ public class HomeFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         btnTambah = view.findViewById(R.id.btnTambah);
+        Log.d("Role ",""+Role);
         if(Role.equals("2")){
             showListFormAdmin();
             btnTambah.setVisibility(view.GONE);
@@ -101,6 +105,16 @@ public class HomeFragment extends Fragment {
             txtKata.setVisibility(view.GONE);
         }else if(Role.equals("4")){
             showListFormFinance();
+            btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+NamaUser);
+            txtKata.setVisibility(view.GONE);
+        }else if(Role.equals("5")){
+            showListFormManajerDiv();
+            btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+NamaUser);
+            txtKata.setVisibility(view.GONE);
+        }else if(Role.equals("6")){
+            showListFormTitleC();
             btnTambah.setVisibility(view.GONE);
             txtNama.setText("Hi, "+NamaUser);
             txtKata.setVisibility(view.GONE);
@@ -192,6 +206,48 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()){
                     List<ListForm> listForms = response.body().getListForms();
                     mAdapter = new ListFormFinanceAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListFormTitleC(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformmanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormTitleCAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListFormManajerDiv(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformmanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormManajerDivAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
                     Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();

@@ -75,7 +75,7 @@
                         android:id="@+id/edtNik"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_marginTop="10dp"
@@ -252,7 +252,7 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="UPLOAD FILE TICKET"/>
+                        android:text="UPLOAD TICKET TRANSPORT"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -269,7 +269,7 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="UPLOAD FILE TICKET"/>
+                        android:text="UPLOAD TICKET HOTEL"/>
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"

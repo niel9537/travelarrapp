@@ -40,8 +40,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
@@ -191,7 +193,7 @@ public class FormActivity extends AppCompatActivity {
                         ivUploadtransport.setImageURI(data.getData());
                         cursor.close();
 
-                        postPath1 = mediaPath2;
+                        postPath1 = mediaPath1;
                     }else{
                         Uri selectedImage = data.getData();
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -228,12 +230,30 @@ public class FormActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Upload file ticket dan hotel terlebih  dahulu", Toast.LENGTH_LONG).show();
         }
         else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+            String currentDateandTime = sdf.format(new Date());
+
             File imagefile = new File(mediaPath1);
+            //String namafile= imagefile.getName().replace("-","").replace("_","").replace(" ","");
+            //resave file with new name
+            File newFile = new File(edtName.getText().toString()+currentDateandTime+"transport"+".jpg");
+            Log.d("TRANSPORT AFTER",""+newFile.getName());
+            imagefile.renameTo(newFile);
+            Log.d("TRANSPORT BEFORE",""+imagefile.getName());
             RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
-            MultipartBody.Part partImage = MultipartBody.Part.createFormData("transport", imagefile.getName(), reqBody);
+            MultipartBody.Part partImage = MultipartBody.Part.createFormData("transport", newFile.getName(), reqBody);
+
+
             File imagefile2 = new File(mediaPath2);
+            //String namafile2= imagefile2.getName().replace("-","").replace("_","").replace(" ","");
+            File newFile2 = new File(edtName.getText().toString()+currentDateandTime+"hotel"+".jpg");
+            Log.d("HOTEL AFTER",""+newFile2.getName());
+            imagefile2.renameTo(newFile2);
+            Log.d("HOTEL BEFORE",""+imagefile2.getName());
             RequestBody reqBody2 = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile2);
-            MultipartBody.Part partImage2 = MultipartBody.Part.createFormData("hotel", imagefile.getName(), reqBody2);
+            MultipartBody.Part partImage2 = MultipartBody.Part.createFormData("hotel", newFile2.getName(), reqBody2);
+
+
             ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
             Call<SubmitFormModel> call = apiInterface.submitform(
                     partImage,

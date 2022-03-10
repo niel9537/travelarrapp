@@ -21,6 +21,8 @@ import com.convergence.travelarrangement.ApiInterface;
 import com.convergence.travelarrangement.FormActivity;
 import com.convergence.travelarrangement.ListFormAdapter;
 import com.convergence.travelarrangement.ListFormAdminAdapter;
+import com.convergence.travelarrangement.ListFormManajerDivAdapter;
+import com.convergence.travelarrangement.ListFormTitleCAdapter;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.ListForm;
@@ -110,11 +112,56 @@ public class ListFragment extends Fragment {
             showListFormPendingManajer();
         }else if(Role.equals("4")){
             showListFormPendingFinance();
+        }else if(Role.equals("5")){
+            showListPendingManajerDiv();
+        }else if(Role.equals("6")){
+            showListPendingManajerDivTitleC();
         }
 
         return view;
     }
+    void showListPendingManajerDiv() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormManajerDivAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListPendingManajerDivTitleC() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdiv();
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormTitleCAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     void showListFormPendingManajer() {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
         Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajer();
