@@ -19,6 +19,7 @@ import com.convergence.travelarrangement.model.ListForm;
 import com.convergence.travelarrangement.model.SetListFormsModel;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,7 +109,9 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -206,7 +209,9 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -285,7 +290,9 @@ public class ListFormFinanceAdapter extends RecyclerView.Adapter<ListFormFinance
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");

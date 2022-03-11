@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +24,15 @@ import com.convergence.travelarrangement.model.ListForm;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyViewHolder> {
     List<ListForm> listForm;
     Context context;
+
+
 
     public ListFormAdapter(List<ListForm> listForm, Context context) {
         this.listForm = listForm;
@@ -100,7 +106,9 @@ public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyView
                 TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                 txtUrgent.setText(listForm.get(position).getUrgent());
                 TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                txtBudget.setText(listForm.get(position).getBudget());
+                int number = Integer.parseInt(listForm.get(position).getBudget());
+                String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                txtBudget.setText("Rp "+str);
                 TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                 if(listForm.get(position).getStatus().equals("1")){
                     txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -163,6 +171,12 @@ public class ListFormAdapter extends RecyclerView.Adapter<ListFormAdapter.MyView
     @Override
     public int getItemCount() {
         return listForm.size();
+    }
+
+    public void setFilter(List<ListForm> newsArrayList) {
+        listForm.clear();
+        listForm.addAll(newsArrayList);
+        notifyDataSetChanged();
     }
 
 

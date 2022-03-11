@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,7 @@ import com.convergence.travelarrangement.model.SetListFormsModel;
 import com.convergence.travelarrangement.model.User;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,7 +112,9 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -186,7 +193,9 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -269,8 +278,30 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     TextView txtUrgent = (TextView) view.findViewById(R.id.txtUrgent);
                     txtUrgent.setText(listForm.get(position).getUrgent());
                     TextView txtBudget = (TextView) view.findViewById(R.id.txtBudget);
-                    txtBudget.setText(listForm.get(position).getBudget());
+                    int number = Integer.parseInt(listForm.get(position).getBudget());
+                    String str = String.format(Locale.US, "%,d", number).replace(',', '.');
+                    txtBudget.setText("Rp "+str);
                     EditText edtBudget = (EditText) view.findViewById(R.id.edtBudget);
+                    LinearLayout linearLayout= (LinearLayout) view.findViewById(R.id.alertdialogpage);
+                    LinearLayout linearLayout2= (LinearLayout) view.findViewById(R.id.alertdialogpage2);
+                    linearLayout.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context
+                                    .INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(edtBudget.getWindowToken(), 0);
+                            return true;
+                        }
+                    });
+                    linearLayout2.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context
+                                    .INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(edtBudget.getWindowToken(), 0);
+                            return true;
+                        }
+                    });
                     TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
                     if(listForm.get(position).getStatus().equals("1")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
@@ -296,6 +327,7 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
                     Button btnHotel = view.findViewById(R.id.btnHotel);
 
                     final AlertDialog alertDialog=builder.create();
+
                     btnTransport.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -413,4 +445,6 @@ public class ListFormAdminAdapter extends RecyclerView.Adapter<ListFormAdminAdap
             txtUrgent = (TextView) itemView.findViewById(R.id.txtUrgent);
         }
     }
+
+
 }

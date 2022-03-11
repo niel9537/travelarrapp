@@ -11,17 +11,17 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         >
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#fff"
+            android:background="@color/blueanedot"
             android:id="@+id/toolBar"
             app:title="Travel Arrangement App"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/white"
             app:popupTheme="@style/AppTheme.popUpOverlay"
             app:layout_scrollFlags="scroll|enterAlways">
-        </androidx.appcompat.widget.Toolbar>
-
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
         android:layout_width="match_parent"

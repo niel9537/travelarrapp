@@ -1,413 +1,482 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/lightgreyanedot"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:textSize="10sp"
-                android:textColor="@color/blueanedot"
-                android:id="@+id/txtFrom"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_location"
-                android:drawableTint="@color/blueanedot"
-                android:text="From"
-                android:textAlignment="center"/>
-            <ImageView
-                android:src="@drawable/dotted_line"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-            <TextView
-                android:textSize="10sp"
-                android:textColor="@color/blueanedot"
-                android:id="@+id/txtTo"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_location"
-                android:drawableTint="@color/blueanedot"
-                android:text="To"
-                android:textAlignment="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
-                android:background="@color/blueanedot"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:layout_marginVertical="10dp"
+                    android:id="@+id/txtFrom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="Detail Perjalanan"
-                    android:gravity="center"/>
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_location"
+                    android:drawableTint="@color/blueanedot"
+                    android:text="From"
+                    android:textAlignment="center"
+                    android:textColor="@color/blueanedot"
+                    android:textSize="10sp" />
 
-            </LinearLayout>
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:background="@color/white"
-                    android:layout_marginHorizontal="20dp"
-                    android:orientation="vertical"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/dotted_line" />
+
+                <TextView
+                    android:id="@+id/txtTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_location"
+                    android:drawableTint="@color/blueanedot"
+                    android:text="To"
+                    android:textAlignment="center"
+                    android:textColor="@color/blueanedot"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/alertdialogpage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/blueanedot">
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Nama"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtName"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": Jurgen Klopp"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="NIK"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtNik"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": 1201021020"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Nomor HP"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtPhonenumber"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": 0824834783748"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Email"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtEmail"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": jurgen111@gmail.com"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Alasan Perjalanan"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtTravelreason"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": Bosan hidup"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Tanggal Berangkat"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtDates"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": 2022-12-12"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Lama Perjalanan"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtDuration"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": 12 Hari"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Tingkat Urgensi"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtUrgent"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": Sangat Penting"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Budget"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtBudget"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": Belum Ditentukan"
-                            android:gravity="left"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text="Status"
-                            android:gravity="left"/>
-                        <TextView
-                            android:id="@+id/txtStatus"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginVertical="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/blueanedot"
-                            android:text=": Menunggu Konfirmasi"
-                            android:gravity="left"/>
-                    </LinearLayout>
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text="Detail Perjalanan"
+                        android:textColor="@color/white" />
+
                 </LinearLayout>
 
-            </ScrollView>
-            <ImageView
-                android:id="@+id/ivPreview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"/>
-            <Button
-                android:textColor="@color/blueanedot"
-                android:backgroundTint="@color/white"
-                android:id="@+id/btnTransport"
-                android:layout_marginHorizontal="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LIHAT DETAIL TRANSPORTASI"
-                android:textSize="15sp"/>
-            <Button
-                android:textColor="@color/blueanedot"
-                android:backgroundTint="@color/white"
-                android:id="@+id/btnHotel"
-                android:layout_marginHorizontal="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LIHAT DETAIL HOTEL"
-                android:textSize="15sp"/>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:orientation="horizontal">
-               <com.google.android.material.textfield.TextInputLayout
-                   android:gravity="center"
-                   android:background="@color/white"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   app:hintTextColor="@color/blueanedot"
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                   android:hint="Budget Perjalanan">
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:textColor="@color/blueanedot"
-                       android:id="@+id/edtBudget"
-                       android:gravity="center"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="number"
-                       android:text=""/>
-               </com.google.android.material.textfield.TextInputLayout>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
-            <LinearLayout
+                    <LinearLayout
+                        android:id="@+id/alertdialogpage2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:orientation="horizontal">
-                <Button
-                    android:backgroundTint="@color/redanedot"
-                    android:layout_weight="1"
-                    android:id="@+id/btnTolak"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Nama"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": Jurgen Klopp"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="NIK"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtNik"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": 1201021020"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Nomor HP"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtPhonenumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": 0824834783748"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Email"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": jurgen111@gmail.com"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Alasan Perjalanan"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtTravelreason"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": Bosan hidup"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Tanggal Berangkat"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtDates"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": 2022-12-12"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Lama Perjalanan"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtDuration"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": 12 Hari"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Tingkat Urgensi"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtUrgent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": Sangat Penting"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Budget"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtBudget"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": Belum Ditentukan"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text="Status"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="10dp"
+                                android:layout_weight="1"
+                                android:gravity="left"
+                                android:text=": Menunggu Konfirmasi"
+                                android:textColor="@color/blueanedot"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </ScrollView>
+
+                <ImageView
+                    android:id="@+id/ivPreview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TOLAK"
-                    android:layout_marginRight="20dp"
-                    android:textSize="15sp"/>
+                    android:scaleType="fitXY" />
+
                 <Button
-                    android:backgroundTint="@android:color/holo_green_light"
-                    android:layout_weight="1"
-                    android:id="@+id/btnTerima"
+                    android:id="@+id/btnTransport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TERIMA"
-                    android:textSize="15sp"/>
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@color/white"
+                    android:text="LIHAT DETAIL TRANSPORTASI"
+                    android:textColor="@color/blueanedot"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btnHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@color/white"
+                    android:text="LIHAT DETAIL HOTEL"
+                    android:textColor="@color/blueanedot"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    android:paddingVertical="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:background="@color/white"
+                        android:text="Rp"
+                        android:textAlignment="center"
+                        android:textColor="@color/blueanedot"
+                        android:textSize="15dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:hint="Budget Perjalanan"
+                        app:hintTextColor="@color/blueanedot">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtBudget"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="@color/blueanedot" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnTolak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/redanedot"
+                        android:text="TOLAK"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/btnTerima"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@android:color/holo_green_light"
+                        android:text="TERIMA"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnKembali"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="KEMBALI"
+                    android:textSize="15sp" />
             </LinearLayout>
-            <Button
-                android:layout_marginHorizontal="20dp"
-                android:id="@+id/btnKembali"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="KEMBALI"
-                android:textSize="15sp"/>
         </LinearLayout>
-    </LinearLayout>
     </ScrollView>
 </RelativeLayout>
