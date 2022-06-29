@@ -16,6 +16,9 @@ public class ListForm {
     @SerializedName("division")
     @Expose
     private String division;
+    @SerializedName("title")
+    @Expose
+    private String title;
     @SerializedName("phonenumber")
     @Expose
     private String phonenumber;
@@ -52,12 +55,19 @@ public class ListForm {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("createat")
+    @Expose
+    private String createat;
 
-    public ListForm(String idTicketarr, String name, String nik, String division, String phonenumber, String email, String travelreason, String fromcity, String tocity, String dates, String duration, String urgent, String transport, String hotel, String budget, String status) {
+    public ListForm(String idTicketarr, String name, String nik, String division, String title, String phonenumber, String email, String travelreason, String fromcity, String tocity, String dates, String duration, String urgent, String transport, String hotel, String budget, String status, String description, String createat) {
         this.idTicketarr = idTicketarr;
         this.name = name;
         this.nik = nik;
         this.division = division;
+        this.title = title;
         this.phonenumber = phonenumber;
         this.email = email;
         this.travelreason = travelreason;
@@ -70,6 +80,8 @@ public class ListForm {
         this.hotel = hotel;
         this.budget = budget;
         this.status = status;
+        this.description = description;
+        this.createat = createat;
     }
 
     public String getIdTicketarr() {
@@ -102,6 +114,14 @@ public class ListForm {
 
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getPhonenumber() {
@@ -198,5 +218,21 @@ public class ListForm {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreateat() {
+        return createat;
+    }
+
+    public void setCreateat(String createat) {
+        this.createat = createat;
     }
 }

@@ -21,6 +21,8 @@ import com.convergence.travelarrangement.ApiInterface;
 import com.convergence.travelarrangement.FormActivity;
 import com.convergence.travelarrangement.ListFormAdapter;
 import com.convergence.travelarrangement.ListFormAdminAdapter;
+import com.convergence.travelarrangement.ListFormFinanceAdapter;
+import com.convergence.travelarrangement.ListFormManajerAdapter;
 import com.convergence.travelarrangement.ListFormManajerDivAdapter;
 import com.convergence.travelarrangement.ListFormTitleCAdapter;
 import com.convergence.travelarrangement.R;
@@ -61,6 +63,7 @@ public class ListFragment extends Fragment {
     private static final String KEY_NIK = "nik";
     String Token = "";
     String Role = "";
+    String Nik = "";
     public ListFragment() {
         // Required empty public constructor
     }
@@ -102,6 +105,7 @@ public class ListFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         Token = sharedPreferences.getString(KEY_TOKEN,null);
         Role = sharedPreferences.getString(KEY_ROLE,null);
+        Nik = sharedPreferences.getString(KEY_NIK,null);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         if(Role.equals("1")){
@@ -122,7 +126,7 @@ public class ListFragment extends Fragment {
     }
     void showListPendingManajerDiv() {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdiv();
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdiv(Nik);
         call.enqueue(new Callback<GetListFormsModel>() {
             @Override
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
@@ -131,19 +135,19 @@ public class ListFragment extends Fragment {
                     mAdapter = new ListFormManajerDivAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
     void showListPendingManajerDivTitleC() {
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdiv();
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingmanajerdivtitlec();
         call.enqueue(new Callback<GetListFormsModel>() {
             @Override
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
@@ -152,13 +156,13 @@ public class ListFragment extends Fragment {
                     mAdapter = new ListFormTitleCAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -170,16 +174,16 @@ public class ListFragment extends Fragment {
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
                 if (response.isSuccessful()){
                     List<ListForm> listForms = response.body().getListForms();
-                    mAdapter = new ListFormAdminAdapter(listForms,getActivity());
+                    mAdapter = new ListFormManajerAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -192,23 +196,23 @@ public class ListFragment extends Fragment {
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
                 if (response.isSuccessful()){
                     List<ListForm> listForms = response.body().getListForms();
-                    mAdapter = new ListFormAdminAdapter(listForms,getActivity());
+                    mAdapter = new ListFormFinanceAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     void showListFormPendingKaryawan(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<GetListFormsModel> call = apiInterface.getlistformpendingkaryawan();
+        Call<GetListFormsModel> call = apiInterface.getlistformpendingkaryawan(Nik);
         call.enqueue(new Callback<GetListFormsModel>() {
             @Override
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
@@ -217,13 +221,13 @@ public class ListFragment extends Fragment {
                     mAdapter = new ListFormAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -239,13 +243,13 @@ public class ListFragment extends Fragment {
                     mAdapter = new ListFormAdminAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

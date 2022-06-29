@@ -3,11 +3,13 @@ package com.convergence.travelarrangement;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,22 +64,32 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
         holder.txtUrgent.setText(listForm.get(position).getUrgent());
         if(listForm.get(position).getStatus().equals("1")){
             holder.txtStatus.setText("Status : Menunggu konfirmasi dari Admin");
+            holder.linearLayout.setBackgroundResource(R.color.yellowanedot);
         }else if(listForm.get(position).getStatus().equals("2")){
             holder.txtStatus.setText("Status : Admin telah konfirmasi, menunggu konfirmasi dari Manajer");
+            holder.linearLayout.setBackgroundResource(R.color.yellowanedot);
         }else if(listForm.get(position).getStatus().equals("3")){
             holder.txtStatus.setText("Status : Permintaan ditolak oleh Admin, silahkan melakukan revisi");
+            holder.linearLayout.setBackgroundResource(R.color.redanedot);
         }else if(listForm.get(position).getStatus().equals("4")){
             holder.txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
+            holder.linearLayout.setBackgroundResource(R.color.yellowanedot);
         }else if(listForm.get(position).getStatus().equals("5")){
             holder.txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+            holder.linearLayout.setBackgroundResource(R.color.redanedot);
         }else if(listForm.get(position).getStatus().equals("6")){
-            holder.txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+            holder.txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance.");
         }else if(listForm.get(position).getStatus().equals("7")){
             holder.txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
+            holder.linearLayout.setBackgroundResource(R.color.yellowanedot);
         }else if(listForm.get(position).getStatus().equals("8")){
             holder.txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+            holder.linearLayout.setBackgroundResource(R.color.redanedot);
         }else if(listForm.get(position).getStatus().equals("9")){
             holder.txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
+        }else if(listForm.get(position).getStatus().equals("99")){
+            holder.txtStatus.setText("Status : Permintaan budget ditolak oleh tim finance, form dibatalkan");
+            holder.linearLayout.setBackgroundResource(R.color.redanedot);
         }else{
             holder.txtStatus.setText("Status : Tidak terdefinisikan");
         }
@@ -93,6 +105,10 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
 
                     AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
                     View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
+                    TextView txtDesc = (TextView) view.findViewById(R.id.txtDesc);
+                    TextView txtDescription = (TextView) view.findViewById(R.id.txtDescription);
+                    TextView txtCreateat = (TextView) view.findViewById(R.id.txtCreateat);
+                    txtCreateat.setText(listForm.get(position).getCreateat());
                     TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
                     txtFrom.setText(listForm.get(position).getFromcity());
                     TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
@@ -129,14 +145,26 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
                     }else if(listForm.get(position).getStatus().equals("5")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("6")){
-                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance.");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
                     }else if(listForm.get(position).getStatus().equals("7")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
                     }else if(listForm.get(position).getStatus().equals("8")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("9")){
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
+                    }else if(listForm.get(position).getStatus().equals("99")){
+                        txtStatus.setText("Status : Permintaan budget ditolak oleh tim finance, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else{
                         txtStatus.setText("Status : Tidak terdefinisikan");
                     }
@@ -183,6 +211,10 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
 
                     AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
                     View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
+                    TextView txtDesc = (TextView) view.findViewById(R.id.txtDesc);
+                    TextView txtDescription = (TextView) view.findViewById(R.id.txtDescription);
+                    TextView txtCreateat = (TextView) view.findViewById(R.id.txtCreateat);
+                    txtCreateat.setText(listForm.get(position).getCreateat());
                     TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
                     txtFrom.setText(listForm.get(position).getFromcity());
                     TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
@@ -218,14 +250,26 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
                     }else if(listForm.get(position).getStatus().equals("5")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("6")){
-                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance.");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
                     }else if(listForm.get(position).getStatus().equals("7")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
                     }else if(listForm.get(position).getStatus().equals("8")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("9")){
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
+                    }else if(listForm.get(position).getStatus().equals("99")){
+                        txtStatus.setText("Status : Permintaan budget ditolak oleh tim finance, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else{
                         txtStatus.setText("Status : Tidak terdefinisikan");
                     }
@@ -270,6 +314,10 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
 
                     AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
                     View view=LayoutInflater.from(context).inflate(R.layout.modal_detailform,null);
+                    TextView txtDesc = (TextView) view.findViewById(R.id.txtDesc);
+                    TextView txtDescription = (TextView) view.findViewById(R.id.txtDescription);
+                    TextView txtCreateat = (TextView) view.findViewById(R.id.txtCreateat);
+                    txtCreateat.setText(listForm.get(position).getCreateat());
                     TextView txtFrom = (TextView) view.findViewById(R.id.txtFrom);
                     txtFrom.setText(listForm.get(position).getFromcity());
                     TextView txtTo = (TextView) view.findViewById(R.id.txtTo);
@@ -305,14 +353,26 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh manajer, sedang di proses oleh tim finance");
                     }else if(listForm.get(position).getStatus().equals("5")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Manajer, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("6")){
-                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance, sedang mencetak laporan");
+                        txtStatus.setText("Status : Permintaan budget dikonfirmasi oleh tim finance.");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
                     }else if(listForm.get(position).getStatus().equals("7")){
                         txtStatus.setText("Status : Menunggu konfirmasi dari Title C");
                     }else if(listForm.get(position).getStatus().equals("8")){
                         txtStatus.setText("Status : Permintaan ditolak oleh Title C, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else if(listForm.get(position).getStatus().equals("9")){
                         txtStatus.setText("Status : Permintaan dikonfirmasi oleh Title C");
+                        txtDescription.setText("Approve");
+                        txtDescription.setTextColor(Color.parseColor("#ff99cc00"));
+                    }else if(listForm.get(position).getStatus().equals("99")){
+                        txtStatus.setText("Status : Permintaan budget ditolak oleh tim finance, form dibatalkan");
+                        txtDesc.setText("Alasan ");
+                        txtDescription.setText(listForm.get(position).getDescription());
                     }else{
                         txtStatus.setText("Status : Tidak terdefinisikan");
                     }
@@ -353,62 +413,62 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
         }
     }
 
-    void terimaAdmin(View view,String id,String Token, String status, String name, String email, String role) {
-        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
-        Call<SetListFormsModel> call = apiInterface.setFormAdminManajerDiv(
-                id,
-                status,
-                name,
-                email,
-                role
-        );
-        call.enqueue(new Callback<SetListFormsModel>() {
-            @Override
-            public void onResponse(Call<SetListFormsModel> call, Response<SetListFormsModel> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(view.getContext(), "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
-                    context.startActivity(new Intent(context, MainActivity.class));
-                } else {
-                    Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SetListFormsModel> call, Throwable t) {
-                Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-    void tolakAdmin(View view,String id,String Token, String status, String name, String email, String role) {
-        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
-        Call<SetListFormsModel> call = apiInterface.setFormAdminManajerDiv(
-                id,
-                status,
-                name,
-                email,
-                role
-        );
-        call.enqueue(new Callback<SetListFormsModel>() {
-            @Override
-            public void onResponse(Call<SetListFormsModel> call, Response<SetListFormsModel> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(view.getContext(), "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
-                    context.startActivity(new Intent(context, MainActivity.class));
-                } else {
-                    Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SetListFormsModel> call, Throwable t) {
-                Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
+//    void terimaAdmin(View view,String id,String Token, String status, String name, String email, String role) {
+//        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
+//        Call<SetListFormsModel> call = apiInterface.setFormAdminManajerDiv(
+//                id,
+//                status,
+//                name,
+//                email,
+//                role
+//        );
+//        call.enqueue(new Callback<SetListFormsModel>() {
+//            @Override
+//            public void onResponse(Call<SetListFormsModel> call, Response<SetListFormsModel> response) {
+//                if (response.isSuccessful()) {
+//                    Toast.makeText(view.getContext(), "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
+//                    context.startActivity(new Intent(context, MainActivity.class));
+//                } else {
+//                    Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SetListFormsModel> call, Throwable t) {
+//                Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }
+//    void tolakAdmin(View view,String id,String Token, String status, String name, String email, String role) {
+//        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer " + Token);
+//        Call<SetListFormsModel> call = apiInterface.setFormAdminManajerDiv(
+//                id,
+//                status,
+//                name,
+//                email,
+//                role
+//        );
+//        call.enqueue(new Callback<SetListFormsModel>() {
+//            @Override
+//            public void onResponse(Call<SetListFormsModel> call, Response<SetListFormsModel> response) {
+//                if (response.isSuccessful()) {
+//                    Toast.makeText(view.getContext(), "Berhasil Konfirmasi", Toast.LENGTH_SHORT).show();
+//                    context.startActivity(new Intent(context, MainActivity.class));
+//                } else {
+//                    Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SetListFormsModel> call, Throwable t) {
+//                Toast.makeText(view.getContext(), "Gagal Konfirmasi", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }
 
     @Override
     public int getItemCount() {
@@ -418,12 +478,14 @@ public class ListFormManajerDivAdapter extends RecyclerView.Adapter<ListFormMana
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txtName, txtDates, txtUrgent, txtStatus;
+        LinearLayout linearLayout;
         public MyViewHolder(View itemView) {
             super(itemView);
             txtStatus = (TextView) itemView.findViewById(R.id.txtStatus);
             txtName = (TextView) itemView.findViewById(R.id.txtName);
             txtDates = (TextView) itemView.findViewById(R.id.txtDates);
             txtUrgent = (TextView) itemView.findViewById(R.id.txtUrgent);
+            linearLayout = itemView.findViewById(R.id.mark);
         }
     }
 }

@@ -28,11 +28,17 @@ public class User {
     @SerializedName("role")
     @Expose
     private String role;
+    @SerializedName("title")
+    @Expose
+    private String title;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("readable")
+    @Expose
+    private String readable;
 
-    public User(String id, String nik, String name, String email, String username, String password, String division, String role, String status) {
+    public User(String id, String nik, String name, String email, String username, String password, String division, String role, String title, String status, String readable) {
         this.id = id;
         this.nik = nik;
         this.name = name;
@@ -41,7 +47,9 @@ public class User {
         this.password = password;
         this.division = division;
         this.role = role;
+        this.title = title;
         this.status = status;
+        this.readable = readable;
     }
 
     public String getId() {
@@ -108,11 +116,27 @@ public class User {
         this.role = role;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReadable() {
+        return readable;
+    }
+
+    public void setReadable(String readable) {
+        this.readable = readable;
     }
 }

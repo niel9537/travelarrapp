@@ -13,6 +13,7 @@
         <item
             android:title="Selesai"
             android:icon="@drawable/ic_done"
+            app:actionViewClass="android.widget.TextView"
             android:id="@+id/done"/>
         <item
             android:title="Tentang Kami"

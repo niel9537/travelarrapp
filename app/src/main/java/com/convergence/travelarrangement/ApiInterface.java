@@ -2,6 +2,7 @@ package com.convergence.travelarrangement;
 
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.LoginModel;
+import com.convergence.travelarrangement.model.NotifModel;
 import com.convergence.travelarrangement.model.ProfileModel;
 import com.convergence.travelarrangement.model.RegisterModel;
 import com.convergence.travelarrangement.model.SetListFormsModel;
@@ -24,6 +25,21 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<LoginModel> login(@Field("username") String username,
                            @Field("password") String password);
+    @POST("user/checknik")
+    @FormUrlEncoded
+    Call<ProfileModel> checknik(@Field("nik") String nik);
+    @POST("travel/setnotifkaryawan")
+    @FormUrlEncoded
+    Call<NotifModel> setnotifkaryawan(@Field("nik") String nik);
+    @POST("travel/setnotifmanager")
+    @FormUrlEncoded
+    Call<NotifModel> setnotifmanager(@Field("nik") String nik);
+    @POST("travel/getnotif")
+    @FormUrlEncoded
+    Call<ProfileModel> getnotif(@Field("nik") String nik);
+    @POST("travel/readnotif")
+    @FormUrlEncoded
+    Call<NotifModel> readnotif(@Field("nik") String nik);
     @POST("user/registrasi")
     @FormUrlEncoded
     Call<RegisterModel> registrasi(@Field("nik") String nik,
@@ -32,6 +48,7 @@ public interface ApiInterface {
                                    @Field("username") String username,
                                    @Field("password") String password,
                                    @Field("division") String division,
+                                   @Field("title") String title,
                                    @Field("role") String role);
     @POST("main/getprofile")
     @FormUrlEncoded
@@ -39,6 +56,25 @@ public interface ApiInterface {
     @Multipart
     @POST("travel/submitform")
     Call<SubmitFormModel> submitform(@Part MultipartBody.Part transport,
+                                     @Part MultipartBody.Part hotel,
+                                     @Part("name") RequestBody name,
+                                     @Part("nik") RequestBody nik,
+                                     @Part("division") RequestBody division,
+                                     @Part("title") RequestBody title,
+                                     @Part("phonenumber") RequestBody phonenumber,
+                                     @Part("email") RequestBody email,
+                                     @Part("travelreason") RequestBody travelreason,
+                                     @Part("fromcity") RequestBody fromcity,
+                                     @Part("tocity") RequestBody tocity,
+                                     @Part("dates") RequestBody dates,
+                                     @Part("duration") RequestBody duration,
+                                     @Part("urgent") RequestBody urgent,
+                                     @Part("role") RequestBody role,
+                                     @Part("description") RequestBody description,
+                                     @Part("createat") RequestBody createat);
+    @Multipart
+    @POST("travel/submitformmanajerdiv")
+    Call<SubmitFormModel> submitformmanajerdiv(@Part MultipartBody.Part transport,
                                      @Part MultipartBody.Part hotel,
                                      @Part("name") RequestBody name,
                                      @Part("nik") RequestBody nik,
@@ -53,10 +89,14 @@ public interface ApiInterface {
                                      @Part("urgent") RequestBody urgent);
     @GET("travel/getlistform")
     Call<GetListFormsModel> getlistform();
-    @GET("travel/getlistformpendingkaryawan")
-    Call<GetListFormsModel> getlistformpendingkaryawan();
+    @POST("travel/getlistformpendingkaryawan")
+    @FormUrlEncoded
+    Call<GetListFormsModel> getlistformpendingkaryawan(@Field("nik") String nik);
     @GET("travel/getlistformdonekaryawan")
     Call<GetListFormsModel> getlistformdonekaryawan();
+    @POST("travel/getlistformdonekaryawannik")
+    @FormUrlEncoded
+    Call<GetListFormsModel> getlistformdonekaryawannik(@Field("nik") String nik);
     @GET("travel/getlistformadmin")
     Call<GetListFormsModel> getlistformadmin();
     @GET("travel/getlistformpendingadmin")
@@ -75,13 +115,28 @@ public interface ApiInterface {
                                          @Field("status") String status,
                                          @Field("name") String name,
                                          @Field("email") String email,
-                                         @Field("role") String role);
+                                         @Field("role") String role,
+                                         @Field("budget") String budget);
+    @POST("travel/setFormAdminManajerDivReason")
+    @FormUrlEncoded
+    Call<SetListFormsModel> setFormAdminManajerDivReason(@Field("id_ticketarr") String id_ticketarr,
+                                                   @Field("status") String status,
+                                                   @Field("name") String name,
+                                                   @Field("email") String email,
+                                                   @Field("role") String role,
+                                                   @Field("description") String description);
     @GET("travel/getlistformmanajerdiv")
     Call<GetListFormsModel> getlistformmanajerdiv();
-    @GET("travel/getlistformpendingmanajerdiv")
-    Call<GetListFormsModel> getlistformpendingmanajerdiv();
+    @POST("travel/getlistformpendingmanajerdiv")
+    @FormUrlEncoded
+    Call<GetListFormsModel> getlistformpendingmanajerdiv(@Field("nik") String nik);
+    @GET("travel/getlistformpendingmanajerdivtitlec")
+    Call<GetListFormsModel> getlistformpendingmanajerdivtitlec();
     @GET("travel/getlistformdonemanajerdiv")
-    Call<GetListFormsModel> getlistformdonemanajerdiv();
+    Call<GetListFormsModel> getlistformdonemanajerdivtitlec();
+    @POST("travel/getlistformdonemanajerdivision")
+    @FormUrlEncoded
+    Call<GetListFormsModel> getlistformdonemanajerdiv(@Field("nik") String nik);
     @POST("travel/setFormAdmin")
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdmin(@Field("id_ticketarr") String id_ticketarr,
@@ -89,6 +144,14 @@ public interface ApiInterface {
                                          @Field("name") String name,
                                          @Field("email") String email,
                                          @Field("role") String role);
+    @POST("travel/setFormAdminReason")
+    @FormUrlEncoded
+    Call<SetListFormsModel> setFormAdminReason(@Field("id_ticketarr") String id_ticketarr,
+                                         @Field("status") String status,
+                                         @Field("name") String name,
+                                         @Field("email") String email,
+                                         @Field("role") String role,
+                                         @Field("description") String description);
     @POST("travel/setFormAdminBudget")
     @FormUrlEncoded
     Call<SetListFormsModel> setFormAdminBudget(@Field("id_ticketarr") String id_ticketarr,

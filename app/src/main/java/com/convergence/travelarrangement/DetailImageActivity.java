@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +20,7 @@ public class DetailImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_detailimage);
         ivDetailimage = findViewById(R.id.ivDetailimage);
         Toolbar toolbar = findViewById(R.id.toolBarform);

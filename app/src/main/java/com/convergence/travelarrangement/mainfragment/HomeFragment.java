@@ -39,11 +39,14 @@ import com.convergence.travelarrangement.ListFormFinanceAdapter;
 import com.convergence.travelarrangement.ListFormManajerAdapter;
 import com.convergence.travelarrangement.ListFormManajerDivAdapter;
 import com.convergence.travelarrangement.ListFormTitleCAdapter;
+import com.convergence.travelarrangement.LoadingDialogBar;
 import com.convergence.travelarrangement.MainActivity;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.ListForm;
+import com.convergence.travelarrangement.model.ProfileModel;
 import com.convergence.travelarrangement.model.SubmitFormModel;
+import com.convergence.travelarrangement.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +60,11 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class HomeFragment extends Fragment {
     Button btnTambah;
     Adapter adapter;
-    TextView txtNama, txtKata;
+    LoadingDialogBar loadingDialogBar;
+    TextView txtNama, txtKata, txtNewnotif, txtNotifikasi;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ListFormAdapter XAdapter;
@@ -74,9 +78,12 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     private static final String KEY_DIVISION = "division";
     private static final String KEY_NAME = "name";
     private static final String KEY_NIK = "nik";
+    private static final String KEY_SUCCESS = "success";
+    String Success = "";
     String Token = "";
     String Role = "";
     String NamaUser = "";
+    String Nik = "";
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -97,48 +104,78 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
+        loadingDialogBar = new LoadingDialogBar(getActivity());
         formArrayList = new ArrayList<>();
         txtNama = view.findViewById(R.id.txtNama);
         txtKata = view.findViewById(R.id.txtKata);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_listForm);
+        txtNewnotif = view.findViewById(R.id.txtNewnotif);
+        txtNotifikasi = view.findViewById(R.id.txtNotifikasi);
+        txtNotifikasi.setVisibility(View.GONE);
+
+        //mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_listForm);
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        Success = sharedPreferences.getString(KEY_SUCCESS,"");
         Token = sharedPreferences.getString(KEY_TOKEN,null);
         Role = sharedPreferences.getString(KEY_ROLE,null);
+        Nik = sharedPreferences.getString(KEY_NIK,null);
         NamaUser = sharedPreferences.getString(KEY_NAME,null);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mLayoutManager = new LinearLayoutManager(getContext());
+//        mRecyclerView.setLayoutManager(mLayoutManager);
         btnTambah = view.findViewById(R.id.btnTambah);
+        String namaUser =  NamaUser.substring(0, 1).toUpperCase() + NamaUser.substring(1);
+        setupBadge();
         Log.d("Role ",""+Role);
+        String namaResult =  NamaUser.substring(0, 1).toUpperCase() + NamaUser.substring(1);
         if(Role.equals("2")){
-            showListFormAdmin();
+            //showListFormAdmin();
             btnTambah.setVisibility(view.GONE);
-            txtNama.setText("Hi, "+NamaUser);
+            txtNama.setText("Hi, "+namaResult);
+            txtNama.setVisibility(view.GONE);
+            txtNewnotif.setText("Hai "+namaResult+", silahkan cek list tiket anda !");
             txtKata.setVisibility(view.GONE);
         }else if(Role.equals("1")){
-            showListForm();
+            txtNama.setText("Hi, "+namaResult);
+            if(Success.equals("1")){
+                txtNewnotif.setText("Hai "+namaUser+", tiket anda berhasil dibuat !");
+            }else{
+                txtNewnotif.setText("Hai "+namaResult+", jangan lupa cek tiketmu sekarang !");
+            }
+            //showListForm();
         }else if(Role.equals("3")){
-            showListFormManajer();
+            //showListFormManajer();
             btnTambah.setVisibility(view.GONE);
-            txtNama.setText("Hi, "+NamaUser);
+            txtNama.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+namaResult);
+            txtNewnotif.setText("Hai "+namaResult+", silahkan cek list tiket anda !");
             txtKata.setVisibility(view.GONE);
         }else if(Role.equals("4")){
-            showListFormFinance();
+            //showListFormFinance();
             btnTambah.setVisibility(view.GONE);
-            txtNama.setText("Hi, "+NamaUser);
+            txtNama.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+namaResult);
+            txtNewnotif.setText("Hai "+namaResult+", silahkan cek list tiket anda !");
             txtKata.setVisibility(view.GONE);
         }else if(Role.equals("5")){
-            showListFormManajerDiv();
-            btnTambah.setVisibility(view.GONE);
-            txtNama.setText("Hi, "+NamaUser);
-            txtKata.setVisibility(view.GONE);
+            //showListFormManajerDiv();
+            //btnTambah.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+namaResult);
+            if(Success.equals("1")){
+                txtNewnotif.setText("Hai "+namaUser+", tiket anda berhasil dibuat !");
+            }else{
+                txtNewnotif.setText("Hai "+namaResult+", jangan lupa cek tiketmu sekarang !");
+            }
+            //txtKata.setVisibility(view.GONE);
         }else if(Role.equals("6")){
-            showListFormTitleC();
+            //showListFormTitleC();
             btnTambah.setVisibility(view.GONE);
-            txtNama.setText("Hi, "+NamaUser);
+            txtNama.setVisibility(view.GONE);
+            txtNama.setText("Hi, "+namaResult);
+            txtNewnotif.setText("Hai "+namaResult+", silahkan cek list tiket anda !");
             txtKata.setVisibility(view.GONE);
         }else{
+            txtNewnotif.setText("Hai "+namaResult+", silahkan cek list tiket anda !");
             //btnTambah.setVisibility(view.GONE);
-            showListForm();
+            //showListForm();
         }
 
 
@@ -150,6 +187,34 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
             }
         });
         return view;
+    }
+    private void setupBadge() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<ProfileModel> call = apiInterface.getnotif(Nik);
+        call.enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                if(response.isSuccessful()){
+                    List<User> userList = response.body().getUsers();
+                    if(userList.get(0).getReadable().equals("1")){
+                        Log.d("NOTIF : "," "+userList.get(0).getReadable());
+                        txtNotifikasi.setVisibility(View.VISIBLE);
+                        txtNotifikasi.setText("Ada tiket yang sudah selesai");
+                    }else{
+                        txtNotifikasi.setVisibility(View.GONE);
+                    }
+                }else{
+                    //Toast.makeText(getActivity(),"Gagal dapat notif, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Log.d("TOKEN : "," "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+                //Toast.makeText(getActivity(),"Gagal menyambungkan, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.d("TOKEN : "," "+t.getMessage());
+            }
+        });
     }
     void showListForm(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
@@ -303,56 +368,56 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
-
-        final MenuItem item = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(this);
-
-
-        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                // Do something when collapsed
-                XAdapter.setFilter(formArrayList);
-                return true; // Return true to collapse action view
-            }
-
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                // Do something when expanded
-                return true; // Return true to expand action view
-            }
-        });
-
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        final List<ListForm> filteredModelList = filter(formArrayList, newText);
-        XAdapter.setFilter(filteredModelList);
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    private List<ListForm> filter(List<ListForm> models, String query) {
-        query = query.toLowerCase();
-
-        final List<ListForm> filteredModelList = new ArrayList<>();
-        for (ListForm model : models) {
-            final String text = model.getName().toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
-            }
-        }
-        return filteredModelList;
-    }
+//
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_search, menu);
+//
+//        final MenuItem item = menu.findItem(R.id.search);
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+//        searchView.setOnQueryTextListener(this);
+//
+//
+//        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+//            @Override
+//            public boolean onMenuItemActionCollapse(MenuItem item) {
+//                // Do something when collapsed
+//                XAdapter.setFilter(formArrayList);
+//                return true; // Return true to collapse action view
+//            }
+//
+//            @Override
+//            public boolean onMenuItemActionExpand(MenuItem item) {
+//                // Do something when expanded
+//                return true; // Return true to expand action view
+//            }
+//        });
+//
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String newText) {
+//        final List<ListForm> filteredModelList = filter(formArrayList, newText);
+//        XAdapter.setFilter(filteredModelList);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextSubmit(String query) {
+//        return false;
+//    }
+//
+//    private List<ListForm> filter(List<ListForm> models, String query) {
+//        query = query.toLowerCase();
+//
+//        final List<ListForm> filteredModelList = new ArrayList<>();
+//        for (ListForm model : models) {
+//            final String text = model.getName().toLowerCase();
+//            if (text.contains(query)) {
+//                filteredModelList.add(model);
+//            }
+//        }
+//        return filteredModelList;
+//    }
 
 }

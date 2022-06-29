@@ -10,4 +10,6 @@
     <color name="blueanedot">#01569e</color>
     <color name="lightgreyanedot">#eef2f5</color>
     <color name="redanedot">#f65446</color>
+    <color name="greenanedot">#ff99cc00</color>
+    <color name="yellowanedot">#ffff00</color>
 </resources>

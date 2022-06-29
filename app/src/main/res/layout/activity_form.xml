@@ -80,15 +80,27 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_marginTop="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:hint="Divisi">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/edtDivision"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Title">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/edtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_marginTop="10dp"
@@ -114,6 +126,47 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textSize="12dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/darker_gray"
+                        android:text="Keterangan :"
+                        android:gravity="left"/>
+                    <TextView
+                        android:id="@+id/txtMakskeretaapi"
+                        android:textSize="12dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/darker_gray"
+                        android:text="- Maks biaya kereta api sebesar Rp.1.000.000 (Ekslusif)"
+                        android:gravity="left"/>
+                    <TextView
+                        android:id="@+id/txtMakspesawat"
+                        android:textSize="12dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/darker_gray"
+                        android:text="- Maks biaya pesawat sebesar Rp.1.000.000 (Ekslusif)"
+                        android:gravity="left"/>
+                    <TextView
+                        android:id="@+id/txtMakshotel"
+                        android:textSize="12dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/darker_gray"
+                        android:text="- Maksimal biaya hotel sebesar Rp.1.000.000 (Ekslusif)"
+                        android:gravity="left"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -200,44 +253,19 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_marginTop="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="Level Urgency"/>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <RadioGroup
-                        android:id="@+id/rdoGroup"
-                        android:orientation="horizontal"
+                    android:hint="Level Urgency">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/edtUrgent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:onClick="checkButton"
-                            android:id="@+id/rdoSedang"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sedang"
-                            android:checked="true"/>
-                        <RadioButton
-                            android:onClick="checkButton"
-                            android:id="@+id/rdoPenting"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Penting"/>
-                        <RadioButton
-                            android:onClick="checkButton"
-                            android:id="@+id/rdoSangatpenting"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sangat Penting"/>
-                    </RadioGroup>
-                </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

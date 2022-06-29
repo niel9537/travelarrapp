@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loginpage"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="20dp">
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/iv_convergence_foreground"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <TextView
+            android:layout_weight="1"
             android:text="Convergence"
             android:fontFamily="sans-serif-thin"
             android:textColor="@color/blueanedot"
@@ -22,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -34,6 +47,7 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:hint="Password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -47,6 +61,7 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton
+            android:layout_weight="1"
             android:id="@+id/btnSignin"
             android:backgroundTint="@color/blueanedot"
             android:layout_marginTop="10dp"
@@ -55,6 +70,7 @@
             android:layout_height="wrap_content"
             android:text="M A S U K"/>
         <TextView
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:id="@+id/btnSignup"
             android:backgroundTint="@color/white"
@@ -63,4 +79,5 @@
             android:layout_height="wrap_content"
             android:text="R E G I S T R A S I"/>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
+</LinearLayout>

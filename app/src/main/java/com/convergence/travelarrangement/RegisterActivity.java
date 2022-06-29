@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.convergence.travelarrangement.model.LoginModel;
 import com.convergence.travelarrangement.model.ProfileModel;
@@ -29,14 +32,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity{
-    EditText edtNik,edtName,edtEmail,edtUsername, edtPassword, edtDivision, edtRole;
+    LoadingDialogBar loadingDialogBar;
+    EditText edtNik,edtName,edtEmail,edtUsername, edtPassword;
+    AutoCompleteTextView edtRole,edtDivision;
+    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapterDiv;
     TextView btnSignin;
     Button btnSignup;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_registrasi);
+        loadingDialogBar = new LoadingDialogBar(this);
         setupUI(findViewById(R.id.registerpage));
         edtNik = findViewById(R.id.edtNik);
         edtName = findViewById(R.id.edtName);
@@ -47,10 +57,38 @@ public class RegisterActivity extends AppCompatActivity{
         edtPassword = findViewById(R.id.edtPassword);
         btnSignin = findViewById(R.id.btnSignin);
         btnSignup = findViewById(R.id.btnSignup);
+        String[] spRole = new String [] {"Staff","CEO","CPO","COO","CTO","MANAGER/BD"};
+        adapter=new ArrayAdapter<String>(
+                RegisterActivity.this,
+                R.layout.spinner_jabatan,
+                spRole
+        );
+        edtRole.setAdapter(adapter);
+        String[] spDivision = new String [] {"IT","FINANCE","GA","OPERATION","MARKETING","SUPPORT"};
+        adapterDiv=new ArrayAdapter<String>(
+                RegisterActivity.this,
+                R.layout.spinner_jabatan,
+                spDivision
+        );
+        edtDivision.setAdapter(adapterDiv);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signup();
+                if(!edtNik.getText().toString().equals("") &&
+                   !edtRole.getText().toString().equals("") &&
+                   !edtEmail.getText().toString().equals("") &&
+                   !edtName.getText().toString().equals("") &&
+                   !edtDivision.getText().toString().equals("") &&
+                   !edtPassword.getText().toString().equals("") &&
+                   !edtUsername.getText().toString().equals("")
+                ){
+                    loadingDialogBar.showDialog("Mohon Tunggu");
+                    checkNik();
+                }else{
+                    loadingDialogBar.showAlert("Data Tidak Lengkap !");
+                    //Toast.makeText(getApplicationContext(),"Data harus lengkap !",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         btnSignin.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +99,35 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
     }
+    public void checkNik(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "");
+        Call<ProfileModel> call = apiInterface.checknik(edtNik.getText().toString());
+        call.enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                if(response.isSuccessful()){
+                    signup();
+                }else{
+                    loadingDialogBar.hideDialog();
+                    loadingDialogBar.showAlert("NIK sudah ada!");
 
-    void signup(){
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this,"Gagal menyambungkan, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void signup(){
+        String jabatan = "";
+        if(edtRole.getText().toString().equals("Staff")){
+            jabatan = "1";
+        }else{
+            jabatan = "5";
+        }
+        Log.d("Title ",""+edtRole.getText().toString());
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "");
         Call<RegisterModel> call = apiInterface.registrasi(
                 edtNik.getText().toString(),
@@ -71,7 +136,8 @@ public class RegisterActivity extends AppCompatActivity{
                 edtUsername.getText().toString(),
                 edtPassword.getText().toString(),
                 edtDivision.getText().toString(),
-                edtRole.getText().toString()
+                edtRole.getText().toString(),
+                jabatan
         );
         call.enqueue(new Callback<RegisterModel>() {
             @Override

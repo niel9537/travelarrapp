@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:backgroundTint="@color/blueanedot"
+                android:id="@+id/mark"
                 android:layout_weight="1"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"/>

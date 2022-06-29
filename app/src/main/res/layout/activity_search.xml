@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/formpage"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            >
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/blueanedot"
+                android:id="@+id/toolBarform"
+                app:popupTheme="@style/AppTheme.popUpOverlay"
+                app:layout_scrollFlags="scroll|enterAlways">
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:singleLine="true"
+                    android:drawablePadding="20dp"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
+                    android:drawableTint="@color/lightgreyanedot"
+                    android:paddingLeft="20dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nama Tiket"
+                    android:textColor="@color/blueanedot"
+                    android:textColorHint="@color/lightgreyanedot"/>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.convergence.travelarrangement;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.convergence.travelarrangement.model.LoginModel;
 import com.convergence.travelarrangement.model.ProfileModel;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity{
     EditText edtUsername, edtPassword;
+    LoadingDialogBar loadingDialogBar;
     Button btnSignin;
     TextView btnSignup;
     SharedPreferences sharedPreferences;
@@ -40,10 +43,15 @@ public class LoginActivity extends AppCompatActivity{
     private static final String KEY_NAME = "name";
     private static final String KEY_NIK = "nik";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_SUCCESS = "success";
+    String Success = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_login);
+        loadingDialogBar = new LoadingDialogBar(this);
         setupUI(findViewById(R.id.loginpage));
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
@@ -53,7 +61,13 @@ public class LoginActivity extends AppCompatActivity{
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login();
+                if(!edtUsername.getText().toString().equals("") && !edtPassword.getText().toString().equals("")){
+                    loadingDialogBar.showDialog("Mohon Tunggu");
+                    login();
+                }else{
+                    loadingDialogBar.showAlert("Data Tidak Lengkap");
+                }
+
             }
         });
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -82,12 +96,18 @@ public class LoginActivity extends AppCompatActivity{
                     Log.d("KEY : ","Token "+response.body().getToken().toString());
                     getProfile(edtUsername.getText().toString(),response.body().getToken());
                 }else{
+                    loadingDialogBar.hideDialog();
+                    loadingDialogBar.showAlert("Gagal Login");
+                    Log.d("Gagal 2",""+response.message());
                     Toast.makeText(LoginActivity.this,"Gagal Login, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
+                Log.d("Gagal ",""+t.getMessage());
+                loadingDialogBar.hideDialog();
+                loadingDialogBar.showAlert("Gagal Login");
                 Toast.makeText(LoginActivity.this,"Gagal Login, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -109,11 +129,17 @@ public class LoginActivity extends AppCompatActivity{
                     editor.putString(KEY_NAME,userList.get(0).getName());
                     editor.putString(KEY_NIK,userList.get(0).getNik());
                     editor.putString(KEY_EMAIL,userList.get(0).getEmail());
+                    editor.putString(KEY_TITLE,userList.get(0).getTitle());
+                    editor.putString(KEY_SUCCESS,"2");
                     editor.apply();
                     Log.d("TOKEN : ","Username "+userList.get(0).getUsername());
+
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
+
                 }else{
+                    loadingDialogBar.hideDialog();
+                    loadingDialogBar.showAlert("Gagal Login");
                     Toast.makeText(LoginActivity.this,"Gagal Login, "+response.message(),Toast.LENGTH_SHORT).show();
                     Log.d("TOKEN : "," "+response.message());
                 }
@@ -121,6 +147,8 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<ProfileModel> call, Throwable t) {
+                loadingDialogBar.hideDialog();
+                loadingDialogBar.showAlert("Gagal Login");
                 Toast.makeText(LoginActivity.this,"Gagal Login, "+t.getMessage(),Toast.LENGTH_SHORT).show();
                 Log.d("TOKEN : "," "+t.getMessage());
             }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ import com.convergence.travelarrangement.ListFormTitleCAdapter;
 import com.convergence.travelarrangement.R;
 import com.convergence.travelarrangement.model.GetListFormsModel;
 import com.convergence.travelarrangement.model.ListForm;
+import com.convergence.travelarrangement.model.NotifModel;
+import com.convergence.travelarrangement.model.ProfileModel;
+import com.convergence.travelarrangement.model.User;
 
 import java.util.List;
 
@@ -57,6 +61,7 @@ public class DoneFragment extends Fragment {
     private static final String KEY_NIK = "nik";
     String Token = "";
     String Role = "";
+    String Nik = "";
     public DoneFragment() {
         // Required empty public constructor
     }
@@ -97,16 +102,40 @@ public class DoneFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         Token = sharedPreferences.getString(KEY_TOKEN,null);
         Role = sharedPreferences.getString(KEY_ROLE,null);
+        Nik = sharedPreferences.getString(KEY_NIK,null);
+        readnotif();
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         if(Role.equals("5")){
             showListFormDoneManajerDiv();
         }else if(Role.equals("6")){
             showListFormDoneManajerDivTitleC();
+        }else if(Role.equals("1")) {
+            showListFormDoneKaryawannik();
         }else{
             showListFormDoneKaryawan();
         }
         return view;
+    }
+    private void readnotif() {
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<NotifModel> call = apiInterface.readnotif(Nik);
+        call.enqueue(new Callback<NotifModel>() {
+            @Override
+            public void onResponse(Call<NotifModel> call, Response<NotifModel> response) {
+                if(response.isSuccessful()){
+                }else{
+                    //Toast.makeText(getActivity(),"Gagal dapat notif, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Log.d("TOKEN : "," "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotifModel> call, Throwable t) {
+                //Toast.makeText(getActivity(),"Gagal menyambungkan, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.d("TOKEN : "," "+t.getMessage());
+            }
+        });
     }
     void showListFormDoneKaryawan(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
@@ -119,20 +148,41 @@ public class DoneFragment extends Fragment {
                     mAdapter = new ListFormAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void showListFormDoneKaryawannik(){
+        ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
+        Call<GetListFormsModel> call = apiInterface.getlistformdonekaryawannik(Nik);
+        call.enqueue(new Callback<GetListFormsModel>() {
+            @Override
+            public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
+                if (response.isSuccessful()){
+                    List<ListForm> listForms = response.body().getListForms();
+                    mAdapter = new ListFormAdapter(listForms,getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }else{
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListFormsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     void showListFormDoneManajerDivTitleC(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdiv();
+        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdivtitlec();
         call.enqueue(new Callback<GetListFormsModel>() {
             @Override
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
@@ -141,19 +191,19 @@ public class DoneFragment extends Fragment {
                     mAdapter = new ListFormTitleCAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
     void showListFormDoneManajerDiv(){
         ApiInterface apiInterface = ApiHelper.createService(ApiInterface.class, "Bearer "+Token);
-        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdiv();
+        Call<GetListFormsModel> call = apiInterface.getlistformdonemanajerdiv(Nik);
         call.enqueue(new Callback<GetListFormsModel>() {
             @Override
             public void onResponse(Call<GetListFormsModel> call, Response<GetListFormsModel> response) {
@@ -162,13 +212,13 @@ public class DoneFragment extends Fragment {
                     mAdapter = new ListFormManajerDivAdapter(listForms,getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
-                    Toast.makeText(getActivity(),"Gagal Tampil, "+response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Tidak ada data, "+response.message(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetListFormsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"Gagal Tampil, "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Tidak ada data, "+t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
